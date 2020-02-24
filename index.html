@@ -178,7 +178,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:16:25 / 修改时间：10:20:44" itemprop="dateCreated datePublished" datetime="2020-02-24T10:16:25+08:00">2020-02-24</time>
+              <time title="创建时间：2020-02-24 10:16:25 / 修改时间：10:32:19" itemprop="dateCreated datePublished" datetime="2020-02-24T10:16:25+08:00">2020-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -205,84 +205,15 @@
       
           <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>上VHDL，遇到一道题<code>序列检测器：检测到连续信号为&quot;1110010&quot;时输出1</code>，突然联想到一直没搞懂的<code>KMP</code>算法：<code>在主文本字符串S内查找一个词W出现的位置</code>。借此机会好好学了一下，然后试图把状态机的想法融入<code>KMP</code>中</p>
 <h2 id="原题"><a href="#原题" class="headerlink" title="原题"></a>原题</h2><p><strong>出自《VHDL数字系统设计》5.6 设计实例1————序列检测器 p113</strong><br>由ASM图可以看出，当检测到<code>111X</code>时，如果<code>X=1</code>，则回退到<code>111X</code>的状态，并不是回归初态。其他点同上。</p>
-<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><p><code>KMP</code>也是这么操作的，详见<a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">阮一峰老师的KMP算法讲解</a>  </p>
-<p>根据前缀和后缀得出的<strong>部分匹配表</strong>，结合ASM图<br>若次态失配，参照现态对应的部分匹配值<code>i</code>，将现态回退至目标序列的第<code>i</code>个状态<br>如本题中部分失配表</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>搜索词</th>
-<th>1</th>
-<th>1</th>
-<th>1</th>
-<th>0</th>
-<th>0</th>
-<th>1</th>
-<th>0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>部分匹配值</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>当检测到<code>111</code>时，若次态不为<code>0</code>，根据现态与部分匹配值，将现态回退到第<code>2</code>个状态，也就是<code>11</code>  </p>
-<p>这时如果你对着书看你就会质问：不对啊，明明书上是回退到<code>111</code>啊，你这不对啊！<br>我一开始也挺疑惑，后来说服了自己：KMP算法是针对任意字符串的匹配，而实际信号只有<code>1</code>和<code>0</code>，不用考虑其他因素，故可在KMP算法基础上补充，然后就有了书上更优的ASM图</p>
-<h2 id="部分失配表"><a href="#部分失配表" class="headerlink" title="部分失配表"></a>部分失配表</h2><p>问题来了，如何用算法生成这个表呢？<br>在比较多程序算法中，由于我们往往是判断现态是否匹配（即<code>S[m] == W[i]</code>），而失配表是判断次态的（即<code>S[m+1] == W[i]</code>），因此我们选择把匹配值<strong>右移</strong>，把第一位填充为<code>-1</code>，即</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>i</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>W</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>T</td>
-<td>-1</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>得到的<code>T[i]</code>为现态<code>W[i]</code>失配时要回退到第<code>T[i]</code>个状态<br>一般把这个<code>T[]</code>记作<code>next[]</code></p>
-<p>对任意字符串<code>S</code>，我们容易知道，<code>T[0] = -1; T[1] = 0;</code><br>而对于其他匹配值，实质上是子字符串<code>W[:i]</code>（即<code>[0,i)</code>）的最长的共有元素的长度。（因为右移）  </p>
-<p>以下为Wiki上KMP的数学伪代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">algorithm kmp_table:</span><br><span class="line">    input:</span><br><span class="line">        an array of characters, W (the word to be analyzed)</span><br><span class="line">        an array of integers, T (the table to be filled)</span><br><span class="line">    output:</span><br><span class="line">        nothing (but during operation, it populates the table)</span><br><span class="line"></span><br><span class="line">    define variables:</span><br><span class="line">        an integer, pos ← 2 (the current position we are computing in T)</span><br><span class="line">        an integer, cnd ← 0 (the zero-based index in W of the next character of the current candidate substring)</span><br><span class="line"></span><br><span class="line">    (the first few values are fixed but different from what the algorithm might suggest)</span><br><span class="line">    let T[0] ← -1, T[1] ← 0</span><br><span class="line"></span><br><span class="line">    while pos &lt; length(W) do</span><br><span class="line">        (first case: the substring continues)</span><br><span class="line">        if W[pos - 1] &#x3D; W[cnd] then</span><br><span class="line">            let cnd ← cnd + 1, T[pos] ← cnd, pos ← pos + 1</span><br><span class="line"></span><br><span class="line">        (second case: it doesn&#39;t, but we can fall back)</span><br><span class="line">        else if cnd &gt; 0 then</span><br><span class="line">            let cnd ← T[cnd]</span><br><span class="line"></span><br><span class="line">        (third case: we have run out of candidates.  Note cnd &#x3D; 0)</span><br><span class="line">        else</span><br><span class="line">            let T[pos] ← 0, pos ← pos + 1</span><br></pre></td></tr></table></figure></p>
-<p>由代码可见，<code>cnd</code>就是最长的共有元素的长度，也就是失配值<br>从逻辑上我们可以知道，之所以有<code>KMP</code>算法，是因为字符串里可能有<code>AB..........AB........</code>，这样做就能减少回溯<br>first case里的条件成立时，<code>pos</code>和<code>cnd</code>都指向下一个状态，同时<code>cnd</code>记录着现在最大的共有元素长度<br>故在<code>O(n)</code>内可建立部分失配表</p>
-<p><del>实在迷惑可以动手写下</del></p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>研究到后面的失配表已经跟状态机没什么关系了，原理部分个人觉得不用状态机也能接受，当然多元学习也是不错的（自我安慰）<br>wiki上的算法tql，我的逻辑一开始看了半天没看懂，我太菜了（<br><del>而且可能我的想法也不太正确</del></p>
-
+<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><p><code>KMP</code>也是这么操作的，详见<a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">阮一峰老师的KMP算法讲解</a><br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/24/kmp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -326,7 +257,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:16:16 / 修改时间：10:16:49" itemprop="dateCreated datePublished" datetime="2020-02-24T10:16:16+08:00">2020-02-24</time>
+              <time title="创建时间：2020-02-24 10:16:16 / 修改时间：10:31:53" itemprop="dateCreated datePublished" datetime="2020-02-24T10:16:16+08:00">2020-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -352,13 +283,14 @@
 
       
           <h2 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h2><p>同步：按顺序请求每个过程，得到响应后再继续下一个请求<br>异步：进程不需要等待，请求先发出，得到响应后再通知进程进行处理  </p>
-<h2 id="header-和-body"><a href="#header-和-body" class="headerlink" title="header 和 body"></a>header 和 body</h2><p>Request 中重要的部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">header: [</span><br><span class="line">    url(path): 请求地址</span><br><span class="line">    method: 请求方法</span><br><span class="line">    queryString: get方法的参数</span><br><span class="line">    headers: 其他报头</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">body: 基本两种类型</span><br><span class="line">    FormData: 表单数据  String  application&#x2F;x-www-form-urlencoded  例 &quot;user&#x3D;123&amp;psw&#x3D;456&quot;</span><br><span class="line">    Payload:  JSON数据      JSON    application&#x2F;json                   例 &#123;user:123,psw:456&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="jquery-fetch-和-axios"><a href="#jquery-fetch-和-axios" class="headerlink" title="jquery fetch 和 axios"></a>jquery fetch 和 axios</h2><p>jquery 发送<code>POST</code>参数实质方法为<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fd = <span class="keyword">new</span> FormData();</span><br><span class="line">fd.append(jqueryData);</span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">'Content-Type'</span> : <span class="string">'application/x-www-data-urlencoded'</span>  <span class="comment">// 强制修改 Content-Type</span></span><br><span class="line">&#125;</span><br><span class="line">ajaxPost()</span><br></pre></td></tr></table></figure></p>
-<p>fetch 和 axios 看<code>Content-Type</code><br>fetch 使用<code>GET</code>方法时只能手动拼接 queryString<br><del>所以还是axios强</del></p>
-<h2 id="POST-和-php-input"><a href="#POST-和-php-input" class="headerlink" title="$_POST 和 php://input"></a>$_POST 和 php://input</h2><p>Coentent-Type仅在取值为<strong>application/x-www-data-urlencoded</strong>和<strong>multipart/form-data</strong>两种情况下，PHP才会将http请求数据包中相应的数据填入全局变量$_POST<br>所以用<strong>application/json</strong>时$_POST 是接受不到东西的，只能用 <code>file_get_contents(&quot;php://input&quot;)</code><br><del>用框架就不会出现这种问题</del></p>
-<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">header(<span class="string">'Access-Control-Allow-Origin: '</span> . $origin)  <span class="comment">// 域名 or ip</span></span><br><span class="line">header(<span class="string">'Access-Control-Allow-Headers: Content-Type'</span>) <span class="comment">// 为了支持 application/json</span></span><br></pre></td></tr></table></figure>
-<p>jquery、fetch、axios 似乎默认跨域，后端PHP配好似乎就完事了</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/24/ajax/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -402,7 +334,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:15:21 / 修改时间：10:15:51" itemprop="dateCreated datePublished" datetime="2020-02-24T10:15:21+08:00">2020-02-24</time>
+              <time title="创建时间：2020-02-24 10:15:21 / 修改时间：10:32:26" itemprop="dateCreated datePublished" datetime="2020-02-24T10:15:21+08:00">2020-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -428,14 +360,15 @@
 
       
           <h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><p>详情文档 <a href="https://learnku.com/docs/laravel/5.8/routing/3890#route-model-binding" target="_blank" rel="noopener">https://learnku.com/docs/laravel/5.8/routing/3890#route-model-binding</a></p>
-<p>Laravel 会自动解析定义在路由或控制器行为中与类型提示的变量名匹配的路由段名称的 Eloquent 模型。例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'api/users/&#123;user&#125;'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(App\User $user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $user-&gt;email;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>在这个例子中，由于 <code>$user</code> 变量被类型提示为 Eloquent 模型 <code>App\User</code>，变量名称又与 URI 中的 <code>{user}</code> 匹配，因此，Laravel 会自动注入与请求 URI 中传入的 <code>ID</code> 匹配的用户模型实例。如果在数据库中找不到对应的模型实例，将会自动生成 404 异常。  </p>
-<p>即传入的 <code>{user}</code> 为对应 <code>Eloquent Model</code> 里的<code>ID</code>值</p>
-<h2 id="路由声明"><a href="#路由声明" class="headerlink" title="路由声明"></a>路由声明</h2><p>路由声明时必须使用 Eloquent 模型的<strong>单数小写</strong>格式来作为路由片段参数，<code>User</code> 对应 <code>{user}</code></p>
-<h3 id="资源路由"><a href="#资源路由" class="headerlink" title="资源路由"></a>资源路由</h3><p>对 <code>Route::apiResource</code> 也要用对应的<strong>单数小写</strong>格式，如<code>(user,UserController)</code></p>
-<h2 id="自定义键名"><a href="#自定义键名" class="headerlink" title="自定义键名"></a>自定义键名</h2><h3 id="官方写法"><a href="#官方写法" class="headerlink" title="官方写法"></a>官方写法</h3><p>在 Eloquent 模型上重写 <code>getRouteKeyName</code> 方法：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取该模型的路由的自定义键名。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> string</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getRouteKeyName</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'slug'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>此方法只能对应一个键名</p>
-<h3 id="重写绑定方法"><a href="#重写绑定方法" class="headerlink" title="重写绑定方法"></a>重写绑定方法</h3><p>在 Eloquent 模型上重写 <code>resolveRouteBinding</code> 方法：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> number || string $value</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Eloquent Collection</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getRouteKeyName</span><span class="params">($value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 需返回一个模型</span></span><br><span class="line">    <span class="comment">// 此函数已内置了404方法，不需要 OrFail</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> response($model)</span><br><span class="line">    <span class="comment">// 返回的是 application/json 的响应</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="相关的中间件"><a href="#相关的中间件" class="headerlink" title="相关的中间件"></a>相关的中间件</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Kernel.php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> $routeMiddleware = [</span><br><span class="line">    <span class="string">'bindings'</span> =&gt; \Illuminate\Routing\Middleware\SubstituteBindings::class,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> $middlewareGroups = [</span><br><span class="line">    <span class="string">'api'</span> =&gt; [</span><br><span class="line">        <span class="string">'bindings'</span></span><br><span class="line">    ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>Laravel 会自动解析定义在路由或控制器行为中与类型提示的变量名匹配的路由段名称的 Eloquent 模型。例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'api/users/&#123;user&#125;'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(App\User $user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $user-&gt;email;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/24/laravel-route/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -479,7 +412,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:13:54 / 修改时间：10:14:18" itemprop="dateCreated datePublished" datetime="2020-02-24T10:13:54+08:00">2020-02-24</time>
+              <time title="创建时间：2020-02-24 10:13:54 / 修改时间：10:34:41" itemprop="dateCreated datePublished" datetime="2020-02-24T10:13:54+08:00">2020-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -552,7 +485,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:13:16 / 修改时间：10:14:48" itemprop="dateCreated datePublished" datetime="2020-02-24T10:13:16+08:00">2020-02-24</time>
+              <time title="创建时间：2020-02-24 10:13:16 / 修改时间：10:32:02" itemprop="dateCreated datePublished" datetime="2020-02-24T10:13:16+08:00">2020-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -579,15 +512,15 @@
       
           <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>关于深度学习部署在Web应用，不过我是在做微信小程序的接口而写的日志，感觉应该也适用于一般Web程序</p>
 <h2 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h2><p>Ubuntu 14.04<br>Nginx<br>python2.7  python3.5<br>php5+<br>tensorflow<br>cv2<br>Flask  </p>
-<h2 id="实际环境"><a href="#实际环境" class="headerlink" title="实际环境"></a>实际环境</h2><p><del>由于我自己并不是很懂深度学习</del><br>根据提供的环境，cv2是用pip3安装的，只能用python3跑</p>
-<h2 id="PHP调用shell"><a href="#PHP调用shell" class="headerlink" title="PHP调用shell"></a>PHP调用shell</h2><p>使用shell_exec(‘python3 xx.py’)  </p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在linux用 php xx.php，成功调用<br>在web请求 xx.php,失败<br>原因不明，无法解决</p>
-<h2 id="pyinstaller"><a href="#pyinstaller" class="headerlink" title="pyinstaller"></a>pyinstaller</h2><p>pyinstaller xx.py生成可执行文件xx<br>然后用php shell_exec()调用</p>
-<h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><p>主程序引用了训练模型，本地执行./xx时报错:no module name ‘训练模型’<br>原因不明，无法解决</p>
-<h2 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h2><p>nginx + Flask + uwsgi提供接口</p>
-<h3 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h3><p>有时调用算法会失败<br>原因：猜测tensorflow不能处理两次同样的照片<br>解决方法：tf.reset_default_graph()<br>放在算法调用之前</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面的原因不明可能放在别的服务器上就没事了，上述方法仅供参考</p>
-
+<h2 id="实际环境"><a href="#实际环境" class="headerlink" title="实际环境"></a>实际环境</h2><p><del>由于我自己并不是很懂深度学习</del><br>根据提供的环境，cv2是用pip3安装的，只能用python3跑<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/24/DeepLearning/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -631,7 +564,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:02:30 / 修改时间：10:03:14" itemprop="dateCreated datePublished" datetime="2020-02-24T10:02:30+08:00">2020-02-24</time>
+              <time title="创建时间：2020-02-24 10:02:30 / 修改时间：10:32:34" itemprop="dateCreated datePublished" datetime="2020-02-24T10:02:30+08:00">2020-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -659,18 +592,15 @@
           <h2 id="宝塔一键快速安装"><a href="#宝塔一键快速安装" class="headerlink" title="宝塔一键快速安装"></a>宝塔一键快速安装</h2><blockquote>
 <p><a href="https://www.bt.cn/bbs/thread-19376-1-1.html" target="_blank" rel="noopener">https://www.bt.cn/bbs/thread-19376-1-1.html</a></p>
 </blockquote>
-<p>记得保存<strong>宝塔用的</strong>账号和密码</p>
-<h2 id="PHP-配置"><a href="#PHP-配置" class="headerlink" title="PHP 配置"></a>PHP 配置</h2><p>安装的PHP版本可能跟WEB不一样<br>即 <code>php -v</code> 显示的可能会跟 <code>phpinfo()</code> 显示的不一样<br>此处要配置php-fpm</p>
-<h3 id="只保留一种版本"><a href="#只保留一种版本" class="headerlink" title="只保留一种版本"></a>只保留一种版本</h3><p><code>yum -y remove php*</code></p>
-<h3 id="安装所需版本"><a href="#安装所需版本" class="headerlink" title="安装所需版本"></a>安装所需版本</h3><p>此处为7.2<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm</span><br><span class="line">yum -y install php72w php72w-cli php72w-common php72w-devel php72w-embedded php72w-fpm php72w-gd php72w-mbstring php72w-mysqlnd php72w-opcache php72w-pdo php72w-xml</span><br></pre></td></tr></table></figure></p>
-<h3 id="php-fpm-配置"><a href="#php-fpm-配置" class="headerlink" title="php-fpm 配置"></a>php-fpm 配置</h3><p>出现了 file not found时<br><code>vim /etc/php-fpm.d/www.conf</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user =  xxxx</span><br><span class="line">group =  xxxx</span><br><span class="line">// 这里的 xxxx 要对应 nginx配置里的 user</span><br></pre></td></tr></table></figure>
-<h3 id="php-fpm-命令"><a href="#php-fpm-命令" class="headerlink" title="php-fpm 命令"></a>php-fpm 命令</h3><p><code>systemctl enable php-fpm</code><br><code>systemctl start php-fpm</code><br><code>systemctl stop php-fpm</code><br><code>systemctl restart php-fpm</code><br>装好之后记得开启</p>
-<h2 id="Nginx-配置"><a href="#Nginx-配置" class="headerlink" title="Nginx 配置"></a>Nginx 配置</h2><h3 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h3><p><code>cd /etc/nginx/conf.d/xxxxx.conf</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name     your_server;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#######</span></span><br><span class="line">    root            your_root_path;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        index index.php index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#######</span></span><br><span class="line">    location ~* \.php$ &#123;</span><br><span class="line">        fastcgi_index   index.php;</span><br><span class="line">        fastcgi_pass    127.0.0.1:9000;</span><br><span class="line">        include           fastcgi_params;</span><br><span class="line">        fastcgi_param   SCRIPT_FILENAME    <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">        fastcgi_param   SCRIPT_NAME        <span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#######</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Nginx-命令"><a href="#Nginx-命令" class="headerlink" title="Nginx 命令"></a>Nginx 命令</h2><p><code>$ sudo systemctl enable nginx</code><br><code>$ sudo systemctl start nginx</code><br><code>$ sudo systemctl restart nginx</code><br><code>$ sudo systemctl reload nginx</code><br>记得重启</p>
-<h3 id="配置域名"><a href="#配置域名" class="headerlink" title="配置域名"></a>配置域名</h3><p><code>vim /etc/hosts</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   your_server</span><br></pre></td></tr></table></figure></p>
-
+<p>记得保存<strong>宝塔用的</strong>账号和密码<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/24/nginx/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -714,7 +644,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 09:51:50 / 修改时间：10:02:00" itemprop="dateCreated datePublished" datetime="2020-02-24T09:51:50+08:00">2020-02-24</time>
+              <time title="创建时间：2020-02-24 09:51:50 / 修改时间：10:32:08" itemprop="dateCreated datePublished" datetime="2020-02-24T09:51:50+08:00">2020-02-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -739,9 +669,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p><img src="/images/docker_1.png" alt="avatar"></p>
-<h2 id="Docker-compose-yml"><a href="#Docker-compose-yml" class="headerlink" title="Docker-compose.yml"></a>Docker-compose.yml</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">''</span> <span class="comment"># docker-compose 的版本号</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nginx:</span>    <span class="comment"># 容器名</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span> <span class="comment"># 拉取镜像</span></span><br><span class="line">    <span class="comment"># build: ./ 通过Dockerfile 构建镜像</span></span><br><span class="line">    <span class="attr">ports:</span> <span class="comment"># 端口</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">"$&#123;本机端口(外部端口)&#125;: $&#123;镜像端口(内部端口)&#125;"</span></span><br><span class="line">    <span class="attr">volumes:</span> <span class="comment">#数据卷</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./:</span> <span class="string">/usr/share/nginx/html</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./nginx.conf:</span> <span class="string">/etc/nginx/nginx.conf</span> <span class="comment"># 本机文件映射到容器</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:5.6</span> <span class="comment"># 镜像名:版本号</span></span><br><span class="line">    <span class="attr">enviroment:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">MYSQL_ROOT_PASSWORD=123456</span> <span class="comment"># 镜像所需的环境变量</span></span><br></pre></td></tr></table></figure>
-
+          <h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p><img src="/images/docker_1.png" alt="avatar"><br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/24/docker/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
