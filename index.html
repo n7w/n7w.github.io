@@ -153,6 +153,141 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/avl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/20/avl/" class="post-title-link" itemprop="url">AVL 树</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-20 21:33:26 / 修改时间：21:59:44" itemprop="dateCreated datePublished" datetime="2020-07-20T21:33:26+08:00">2020-07-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    TreeNode *left, *right;</span><br><span class="line"></span><br><span class="line">    TreeNode(<span class="keyword">int</span> v) &#123;</span><br><span class="line">        val = v;</span><br><span class="line">        left = right = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/20/avl/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/17/acwing-basic-datastruct/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/17/acwing-basic-datastruct/" class="post-title-link" itemprop="url">acwing常用数据结构</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-17 00:01:43" itemprop="dateCreated datePublished" datetime="2020-07-17T00:01:43+08:00">2020-07-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-19 20:20:13" itemprop="dateModified" datetime="2020-07-19T20:20:13+08:00">2020-07-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!s.empty() &amp;&amp; check(s.top(), x)) s.pop();</span><br><span class="line">    s.push(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="单调队列（滑动窗口）"><a href="#单调队列（滑动窗口）" class="headerlink" title="单调队列（滑动窗口）"></a>单调队列（滑动窗口）</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; dq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_1( dq.front() ) ) dq.pop_front();</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_2( dq.<span class="built_in">end</span>() , x) ) dq.pop_back();</span><br><span class="line">    dq.push_back(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 判断是否收缩窗口，一般是窗口大小受限</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字典树"><a href="#字典树" class="headerlink" title="字典树"></a>字典树</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Trie* children[<span class="number">26</span>] = &#123; <span class="literal">nullptr</span> &#125;;</span><br><span class="line">    <span class="keyword">bool</span> is_end = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Trie() &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> &amp;<span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> *curr = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : <span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!curr-&gt;children[w - <span class="string">'a'</span>]) &#123;</span><br><span class="line">                curr-&gt;children[w - <span class="string">'a'</span>] = <span class="keyword">new</span> Trie();</span><br><span class="line">            &#125;</span><br><span class="line">            curr = curr-&gt;children[w - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        curr-&gt;is_end = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; uf; <span class="comment">// 根节点</span></span><br><span class="line"><span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; <span class="built_in">height</span>; <span class="comment">// 秩</span></span><br><span class="line"><span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; cnt; <span class="comment">// 连通节点数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// uf[a] = b --&gt; a 的根节点是 b</span></span><br><span class="line"><span class="comment">// height[a]： a 所在连通树的高度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">        uf[i] = i;</span><br><span class="line">        <span class="built_in">height</span>[i] = cnt[i] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查找</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (x != uf[x]) x = uf[x];</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路径压缩查找</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x == uf[x] ? x : uf[x] = <span class="built_in">find</span>( uf[x] );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数值小的做为根</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    x= <span class="built_in">find</span>(x), y = <span class="built_in">find</span>(y);</span><br><span class="line">    <span class="keyword">if</span> (x &lt; y) &#123;</span><br><span class="line">        uf[y] = x;</span><br><span class="line">        cnt[x] += cnt[y];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span>(x &gt; y) &#123;</span><br><span class="line">        uf[x] = y;</span><br><span class="line">        cnt[y] += cnt[x];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 按秩合并（启发式合并）</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x = <span class="built_in">find</span>(i), y = <span class="built_in">find</span>(j); </span><br><span class="line">    <span class="comment">// 小树合并到大树</span></span><br><span class="line">    <span class="keyword">if</span> ( <span class="built_in">height</span>[x] &lt; <span class="built_in">height</span>[y] ) &#123;</span><br><span class="line">        uf[x] = y;</span><br><span class="line">        cnt[y] += cnt[x]; </span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( uf_height[x] &gt; <span class="built_in">height</span>[y] ) &#123;</span><br><span class="line">        uf[y] = x;</span><br><span class="line">        cnt[x] += cnt[y]; </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 秩相同时，可能为两棵树，也可能在同一棵树</span></span><br><span class="line">        uf[x] = y;</span><br><span class="line">        <span class="keyword">if</span> (x != y) &#123;</span><br><span class="line">            ++rand[y]; <span class="comment">// 深度 + 1</span></span><br><span class="line">            cnt[y] += cnt[x];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启发式合并作用其实不大，而且在考虑父子节点关系的时候不能和路径压缩连用<br><del>所以说最好还是不用启发式合并</del></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/leetcode-getKth/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -184,7 +319,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-09 09:01:44" itemprop="dateModified" datetime="2020-06-09T09:01:44+08:00">2020-06-09</time>
+                <time title="修改时间：2020-07-17 00:30:12" itemprop="dateModified" datetime="2020-07-17T00:30:12+08:00">2020-07-17</time>
               </span>
 
           
@@ -256,7 +391,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-03 15:03:17" itemprop="dateModified" datetime="2020-06-03T15:03:17+08:00">2020-06-03</time>
+                <time title="修改时间：2020-07-19 15:18:08" itemprop="dateModified" datetime="2020-07-19T15:18:08+08:00">2020-07-19</time>
               </span>
 
           
@@ -270,7 +405,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>邻接矩阵： <code>map[a][b] ===  a -&gt; b</code><br>邻接表： <code>vector&lt;vector&lt;int&gt;&gt; map</code></p>
+          <p>对 0….n-1 共 $n$ 个点组成的图，一共有 $m$ 条边</p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>邻接矩阵：<br><code>vector&lt;vector&lt;int&gt;&gt; graph(n, vector&lt;int&gt;(n, 0))</code><br><code>graph[a][b]</code>：a -&gt; b 的权值</p>
+<p>不能开太大，比如 N = 1e4：</p>
+<script type="math/tex; mode=display">1e4 * 1e4 * sizeof(int) = 381MB</script><p>无权值存储：<br><code>vector&lt;int&gt; graph[N]</code></p>
+<p>邻接表： PII : pair<int,int><br><code>unordered_map&lt;int, list&lt;&lt;PII&gt;&gt; &gt; graph</code><br><code>graph[a]</code>： 与 a 连接的所有点<br><code>graph[a][i].first</code>：a 与 b 连接<br><code>graph[a][i].second</code>：a -&gt; b 的权值</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/05/13/acwing-graph/#more" rel="contents">
@@ -320,10 +459,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-05-13 23:03:28 / 修改时间：23:38:07" itemprop="dateCreated datePublished" datetime="2020-05-13T23:03:28+08:00">2020-05-13</time>
+              <time title="创建时间：2020-05-13 23:03:28" itemprop="dateCreated datePublished" datetime="2020-05-13T23:03:28+08:00">2020-05-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-15 00:12:22" itemprop="dateModified" datetime="2020-06-15T00:12:22+08:00">2020-06-15</time>
+              </span>
 
           
 
@@ -394,7 +539,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-13 23:33:36" itemprop="dateModified" datetime="2020-05-13T23:33:36+08:00">2020-05-13</time>
+                <time title="修改时间：2020-06-14 22:11:10" itemprop="dateModified" datetime="2020-06-14T22:11:10+08:00">2020-06-14</time>
               </span>
 
           
@@ -684,85 +829,6 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/kmp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/24/kmp/" class="post-title-link" itemprop="url">kmp与状态机</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-02-24 10:16:25 / 修改时间：10:32:19" itemprop="dateCreated datePublished" datetime="2020-02-24T10:16:25+08:00">2020-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>上VHDL，遇到一道题<code>序列检测器：检测到连续信号为&quot;1110010&quot;时输出1</code>，突然联想到一直没搞懂的<code>KMP</code>算法：<code>在主文本字符串S内查找一个词W出现的位置</code>。借此机会好好学了一下，然后试图把状态机的想法融入<code>KMP</code>中</p>
-<h2 id="原题"><a href="#原题" class="headerlink" title="原题"></a>原题</h2><p><strong>出自《VHDL数字系统设计》5.6 设计实例1————序列检测器 p113</strong><br>由ASM图可以看出，当检测到<code>111X</code>时，如果<code>X=1</code>，则回退到<code>111X</code>的状态，并不是回归初态。其他点同上。</p>
-<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><p><code>KMP</code>也是这么操作的，详见<a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html" target="_blank" rel="noopener">阮一峰老师的KMP算法讲解</a><br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/24/kmp/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/ajax/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -817,84 +883,6 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/02/24/ajax/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/laravel-route/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/24/laravel-route/" class="post-title-link" itemprop="url">Laravel 路由的隐式绑定</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-02-24 10:15:21 / 修改时间：10:32:26" itemprop="dateCreated datePublished" datetime="2020-02-24T10:15:21+08:00">2020-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">后端</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><p>详情文档 <a href="https://learnku.com/docs/laravel/5.8/routing/3890#route-model-binding" target="_blank" rel="noopener">https://learnku.com/docs/laravel/5.8/routing/3890#route-model-binding</a></p>
-<p>Laravel 会自动解析定义在路由或控制器行为中与类型提示的变量名匹配的路由段名称的 Eloquent 模型。例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'api/users/&#123;user&#125;'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(App\User $user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $user-&gt;email;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/24/laravel-route/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -984,7 +972,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -997,7 +985,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
