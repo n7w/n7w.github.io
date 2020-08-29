@@ -20,20 +20,19 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="指针指向对一个链表 ListNode *head  A--&gt;B--&gt;C--&gt;D令 ListNode *next &#x3D; head-&gt;next显然 *next 为  B--&gt;C--&gt;D若我们想以此实现交换A和B，则">
+  <meta name="description" content="马拉车算法解决回文子串问题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="链表">
-<meta property="og:url" content="http://yoursite.com/2020/02/29/linklisted/index.html">
+<meta property="og:title" content="manacher">
+<meta property="og:url" content="http://yoursite.com/2020/08/29/manacher/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="指针指向对一个链表 ListNode *head  A--&gt;B--&gt;C--&gt;D令 ListNode *next &#x3D; head-&gt;next显然 *next 为  B--&gt;C--&gt;D若我们想以此实现交换A和B，则">
+<meta property="og:description" content="马拉车算法解决回文子串问题">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-29T13:11:40.000Z">
-<meta property="article:modified_time" content="2020-02-29T17:29:34.347Z">
+<meta property="article:published_time" content="2020-08-29T12:44:46.000Z">
+<meta property="article:modified_time" content="2020-08-29T16:33:17.340Z">
 <meta property="article:author" content="dollerL">
-<meta property="article:tag" content="LinkListed">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/02/29/linklisted/">
+<link rel="canonical" href="http://yoursite.com/2020/08/29/manacher/">
 
 
 <script id="page-configurations">
@@ -45,7 +44,7 @@
   };
 </script>
 
-  <title>链表 | Hexo</title>
+  <title>manacher | Hexo</title>
   
 
 
@@ -156,7 +155,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/29/linklisted/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/29/manacher/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -169,7 +168,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          链表
+          manacher
         </h1>
 
         <div class="post-meta">
@@ -179,26 +178,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-02-29 21:11:40" itemprop="dateCreated datePublished" datetime="2020-02-29T21:11:40+08:00">2020-02-29</time>
+              <time title="创建时间：2020-08-29 20:44:46" itemprop="dateCreated datePublished" datetime="2020-08-29T20:44:46+08:00">2020-08-29</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-01 01:29:34" itemprop="dateModified" datetime="2020-03-01T01:29:34+08:00">2020-03-01</time>
+                <time title="修改时间：2020-08-30 00:33:17" itemprop="dateModified" datetime="2020-08-30T00:33:17+08:00">2020-08-30</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-            </span>
 
           
 
@@ -211,26 +199,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="指针指向"><a href="#指针指向" class="headerlink" title="指针指向"></a>指针指向</h2><p>对一个链表 <code>ListNode *head</code></p>
-<script type="math/tex; mode=display">
-A-->B-->C-->D</script><p>令 <code>ListNode *next = head-&gt;next</code><br>显然 <code>*next</code> 为</p>
-<script type="math/tex; mode=display">
-B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</code>，则<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">head.next = head.next.next;</span><br><span class="line">next.next = head;</span><br></pre></td></tr></table></figure><br>第一步结束后 <code>*head</code></p>
-<script type="math/tex; mode=display">
-A-->C-->D</script><p>第二步结束后 <code>*next</code></p>
-<script type="math/tex; mode=display">
-B-->A-->C-->D</script><h4 id="当迷惑的时候建议写下链表实际走向"><a href="#当迷惑的时候建议写下链表实际走向" class="headerlink" title="当迷惑的时候建议写下链表实际走向"></a>当迷惑的时候建议写下链表实际走向</h4><hr>
-<p>对原链表 <code>*head</code></p>
-<script type="math/tex; mode=display">
-A-->B-->C-->D</script><p>现要在其尾部添加一元素，则<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ListNode curr = head;</span><br><span class="line"><span class="keyword">while</span> (curr.next != <span class="keyword">null</span>) curr = curr.next;</span><br><span class="line">curr.next = <span class="keyword">new</span> ListNode(<span class="string">'E'</span>);</span><br></pre></td></tr></table></figure><br>最终遍历 <code>*head</code>，有</p>
-<script type="math/tex; mode=display">
-A-->B-->C-->D-->E</script><p>若修改代码为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ListNode curr = head;</span><br><span class="line"><span class="keyword">while</span> (curr != <span class="keyword">null</span>) curr = curr.next;</span><br><span class="line">curr = <span class="keyword">new</span> ListNode(<span class="string">'E'</span>);</span><br></pre></td></tr></table></figure><br>则会没有任何变化</p>
-<h4 id="链表实质"><a href="#链表实质" class="headerlink" title="链表实质"></a>链表实质</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    ListNode next;  <span class="comment">// 物理地址</span></span><br><span class="line">    ListNode(<span class="keyword">int</span> x) &#123;val = x;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当 <code>curr.next = null</code> 时，链表为</p>
-<script type="math/tex; mode=display">
-head: A-->B-->C-->D</script><script type="math/tex; mode=display">
-curr: D-->NULL</script><p>此时修改的结点 $D$ 是同一个物理地址下的，可以通过 $C$ 访问得到，故最后 <code>curr</code> 被回收后也能影响到 $D$ 结点   </p>
-<p>而 <code>curr = null</code> 时，没有可以访问到该节点的方法，为无效指针</p>
+        <h2 id="马拉车算法解决回文子串问题"><a href="#马拉车算法解决回文子串问题" class="headerlink" title="马拉车算法解决回文子串问题"></a>马拉车算法解决回文子串问题</h2><a id="more"></a>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Manacher</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * s ：原始的字符串。</span></span><br><span class="line"><span class="comment">     * str : s 插入占位符之后得到的字符串。</span></span><br><span class="line"><span class="comment">     * L ：算法过程中，已知的右端点最靠右的，回文子串的，左端点，初始为 0。</span></span><br><span class="line"><span class="comment">     * R ：算法过程中，已知的右端点最靠右的，回文子串的，右端点，初始为 -1。</span></span><br><span class="line"><span class="comment">     * dp ：一个数组。dp[i] 表示以 str[i] 为中心的回文子串的长度。</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp;</span><br><span class="line"></span><br><span class="line">    Manacher(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s) &#123;</span><br><span class="line">        <span class="built_in">string</span> str = <span class="string">"#"</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;c : s) &#123;</span><br><span class="line">            str += c;</span><br><span class="line">            str += <span class="string">"#"</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> n = str.<span class="built_in">size</span>();</span><br><span class="line">        dp.resize(n);</span><br><span class="line">        <span class="keyword">int</span> L = <span class="number">0</span>, R = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i &lt;= R) &#123;</span><br><span class="line">                dp[i] = <span class="built_in">min</span>((R - i) * <span class="number">2</span> + <span class="number">1</span>, dp[L + R - i]);    <span class="comment">// 关键的转移算法</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                dp[i] = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> l = i - dp[i] / <span class="number">2</span> - <span class="number">1</span>;  <span class="comment">// 当前回文串的左边字符</span></span><br><span class="line">            <span class="keyword">int</span> r = i + dp[i] / <span class="number">2</span> + <span class="number">1</span>;  <span class="comment">// 当前回文串的右边字符</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 中心扩展法</span></span><br><span class="line">            <span class="keyword">while</span> (l &gt;= <span class="number">0</span> &amp;&amp; r &lt; n &amp;&amp; str[l] == str[r]) &#123;</span><br><span class="line">                --l, ++r;</span><br><span class="line">            &#125;</span><br><span class="line">            dp[i] = r - l - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 更新</span></span><br><span class="line">            <span class="keyword">if</span> (r &gt; R) &#123;</span><br><span class="line">                L = l + <span class="number">1</span>;</span><br><span class="line">                R = r - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取最长回文子串</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getLongestPalindrome</span><span class="params">(<span class="keyword">int</span> &amp;start, <span class="keyword">int</span> &amp;len)</span> </span>&#123;</span><br><span class="line">        start = <span class="number">-1</span>, len = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[i] &gt; len) &#123;</span><br><span class="line">                len = dp[i], start = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        len /= <span class="number">2</span>;</span><br><span class="line">        start = start / <span class="number">2</span> - len / <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断 S[l,r] 是否为回文子串</span></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        l = l * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        r = r * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span>) mid &lt; dp.<span class="built_in">size</span>() &amp;&amp; (r - l + <span class="number">1</span>) &lt;= dp[mid];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>可以在 $O(N)$ 时间内解决子串问题</p>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><ul>
+<li><code>dp[i]</code> 的大小<br>易知<code>dp[i]</code> 肯定是奇数，$(dp[i] + 1) / 2$ 为子串半径</li>
+</ul>
 
     </div>
 
@@ -239,9 +213,6 @@ curr: D-->NULL</script><p>此时修改的结点 $D$ 是同一个物理地址下�
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/LinkListed/" rel="tag"># LinkListed</a>
-          </div>
 
         
 
@@ -249,13 +220,10 @@ curr: D-->NULL</script><p>此时修改的结点 $D$ 是同一个物理地址下�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/02/24/ajax/" rel="prev" title="ajax">
-      <i class="fa fa-chevron-left"></i> ajax
+    <a href="/2020/08/20/bfs/" rel="prev" title="算法相关问题 1">
+      <i class="fa fa-chevron-left"></i> 算法相关问题 1
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/03/07/paixu/" rel="next" title="常用排序">
-      常用排序 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -315,7 +283,7 @@ curr: D-->NULL</script><p>此时修改的结点 $D$ 是同一个物理地址下�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#指针指向"><span class="nav-number">1.</span> <span class="nav-text">指针指向</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#当迷惑的时候建议写下链表实际走向"><span class="nav-number">1.0.1.</span> <span class="nav-text">当迷惑的时候建议写下链表实际走向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链表实质"><span class="nav-number">1.0.2.</span> <span class="nav-text">链表实质</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#马拉车算法解决回文子串问题"><span class="nav-number">1.</span> <span class="nav-text">马拉车算法解决回文子串问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">1.1.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-number">1.2.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
