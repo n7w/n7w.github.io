@@ -20,20 +20,19 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="简介关于深度学习部署在Web应用，不过我是在做微信小程序的接口而写的日志，感觉应该也适用于一般Web程序 测试环境Ubuntu 14.04Nginxpython2.7  python3.5php5+tensorflowcv2Flask   实际环境由于我自己并不是很懂深度学习根据提供的环境，cv2是用pip3安装的，只能用python3跑">
+  <meta name="description" content="树状数组主要解决两个问题  快速求前缀和 快速修改一个元素  原数组 求前缀和 $O(N)$ 修改元素 $O(1)$  前缀和数组 求前缀和 $O(1)$ 修改元素 $O(1)$  树状数组 求前缀和 $O(\log N)$ 修改元素 $O(\log N)$  结构123456789101112131415161718192021int tree[N]; &#x2F;&#x2F; 下标从 1 开始int lowbit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深度学习与接口">
-<meta property="og:url" content="http://yoursite.com/2020/02/24/DeepLearning/index.html">
+<meta property="og:title" content="树状数组">
+<meta property="og:url" content="http://yoursite.com/2020/09/06/binary-indexed-tree/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="简介关于深度学习部署在Web应用，不过我是在做微信小程序的接口而写的日志，感觉应该也适用于一般Web程序 测试环境Ubuntu 14.04Nginxpython2.7  python3.5php5+tensorflowcv2Flask   实际环境由于我自己并不是很懂深度学习根据提供的环境，cv2是用pip3安装的，只能用python3跑">
+<meta property="og:description" content="树状数组主要解决两个问题  快速求前缀和 快速修改一个元素  原数组 求前缀和 $O(N)$ 修改元素 $O(1)$  前缀和数组 求前缀和 $O(1)$ 修改元素 $O(1)$  树状数组 求前缀和 $O(\log N)$ 修改元素 $O(\log N)$  结构123456789101112131415161718192021int tree[N]; &#x2F;&#x2F; 下标从 1 开始int lowbit">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-02-24T02:13:16.000Z">
-<meta property="article:modified_time" content="2020-02-24T02:32:02.800Z">
+<meta property="article:published_time" content="2020-09-06T11:10:36.000Z">
+<meta property="article:modified_time" content="2020-09-06T11:18:28.718Z">
 <meta property="article:author" content="dollerL">
-<meta property="article:tag" content="deep_learing">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/02/24/DeepLearning/">
+<link rel="canonical" href="http://yoursite.com/2020/09/06/binary-indexed-tree/">
 
 
 <script id="page-configurations">
@@ -45,7 +44,7 @@
   };
 </script>
 
-  <title>深度学习与接口 | Hexo</title>
+  <title>树状数组 | Hexo</title>
   
 
 
@@ -156,7 +155,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/DeepLearning/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/06/binary-indexed-tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -169,7 +168,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          深度学习与接口
+          树状数组
         </h1>
 
         <div class="post-meta">
@@ -180,18 +179,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:13:16 / 修改时间：10:32:02" itemprop="dateCreated datePublished" datetime="2020-02-24T10:13:16+08:00">2020-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E6%B2%BF/" itemprop="url" rel="index">
-                    <span itemprop="name">前沿</span>
-                  </a>
-                </span>
+              <time title="创建时间：2020-09-06 19:10:36 / 修改时间：19:18:28" itemprop="dateCreated datePublished" datetime="2020-09-06T19:10:36+08:00">2020-09-06</time>
             </span>
 
           
@@ -205,16 +193,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>关于深度学习部署在Web应用，不过我是在做微信小程序的接口而写的日志，感觉应该也适用于一般Web程序</p>
-<h2 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h2><p>Ubuntu 14.04<br>Nginx<br>python2.7  python3.5<br>php5+<br>tensorflow<br>cv2<br>Flask  </p>
-<h2 id="实际环境"><a href="#实际环境" class="headerlink" title="实际环境"></a>实际环境</h2><p><del>由于我自己并不是很懂深度学习</del><br>根据提供的环境，cv2是用pip3安装的，只能用python3跑<br><a id="more"></a></p>
-<h2 id="PHP调用shell"><a href="#PHP调用shell" class="headerlink" title="PHP调用shell"></a>PHP调用shell</h2><p>使用shell_exec(‘python3 xx.py’)  </p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在linux用 php xx.php，成功调用<br>在web请求 xx.php,失败<br>原因不明，无法解决</p>
-<h2 id="pyinstaller"><a href="#pyinstaller" class="headerlink" title="pyinstaller"></a>pyinstaller</h2><p>pyinstaller xx.py生成可执行文件xx<br>然后用php shell_exec()调用</p>
-<h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><p>主程序引用了训练模型，本地执行./xx时报错:no module name ‘训练模型’<br>原因不明，无法解决</p>
-<h2 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h2><p>nginx + Flask + uwsgi提供接口</p>
-<h3 id="问题-2"><a href="#问题-2" class="headerlink" title="问题"></a>问题</h3><p>有时调用算法会失败<br>原因：猜测tensorflow不能处理两次同样的照片<br>解决方法：tf.reset_default_graph()<br>放在算法调用之前</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面的原因不明可能放在别的服务器上就没事了，上述方法仅供参考</p>
+        <h2 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h2><p>主要解决两个问题</p>
+<ol>
+<li>快速求前缀和</li>
+<li>快速修改一个元素</li>
+</ol>
+<h3 id="原数组"><a href="#原数组" class="headerlink" title="原数组"></a>原数组</h3><ol>
+<li>求前缀和 $O(N)$</li>
+<li>修改元素 $O(1)$</li>
+</ol>
+<h3 id="前缀和数组"><a href="#前缀和数组" class="headerlink" title="前缀和数组"></a>前缀和数组</h3><ol>
+<li>求前缀和 $O(1)$</li>
+<li>修改元素 $O(1)$</li>
+</ol>
+<h3 id="树状数组-1"><a href="#树状数组-1" class="headerlink" title="树状数组"></a>树状数组</h3><ol>
+<li>求前缀和 $O(\log N)$</li>
+<li>修改元素 $O(\log N)$</li>
+</ol>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> tree[N]; <span class="comment">// 下标从 1 开始</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &amp; -x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改元素</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; =n; i += lowbit(i)) &#123;</span><br><span class="line">        tree[i] += v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 求前缀和</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> s = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i ; i -= lowbit(i)) &#123;</span><br><span class="line">        s += tree[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -223,9 +219,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/deep-learing/" rel="tag"># deep_learing</a>
-          </div>
 
         
 
@@ -233,13 +226,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/02/24/nginx/" rel="prev" title="Centos7 下 LNMP">
-      <i class="fa fa-chevron-left"></i> Centos7 下 LNMP
+    <a href="/2020/09/04/sql/" rel="prev" title="sql">
+      <i class="fa fa-chevron-left"></i> sql
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/02/24/vultr/" rel="next" title="vultr 快速搭建 ss">
-      vultr 快速搭建 ss <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -299,7 +289,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试环境"><span class="nav-number">2.</span> <span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际环境"><span class="nav-number">3.</span> <span class="nav-text">实际环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP调用shell"><span class="nav-number">4.</span> <span class="nav-text">PHP调用shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">4.1.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pyinstaller"><span class="nav-number">5.</span> <span class="nav-text">pyinstaller</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-1"><span class="nav-number">5.1.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flask"><span class="nav-number">6.</span> <span class="nav-text">Flask</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-2"><span class="nav-number">6.1.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树状数组"><span class="nav-number">1.</span> <span class="nav-text">树状数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原数组"><span class="nav-number">1.1.</span> <span class="nav-text">原数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前缀和数组"><span class="nav-number">1.2.</span> <span class="nav-text">前缀和数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树状数组-1"><span class="nav-number">1.3.</span> <span class="nav-text">树状数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构"><span class="nav-number">2.</span> <span class="nav-text">结构</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -394,7 +384,7 @@
 <script src="/js/schemes/pisces.js"></script>
 
 
-<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -418,6 +408,53 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
 
   
 
