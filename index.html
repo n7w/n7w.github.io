@@ -153,63 +153,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/07/LFU/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/07/LFU/" class="post-title-link" itemprop="url">LFU</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-07 20:55:06" itemprop="dateCreated datePublished" datetime="2020-09-07T20:55:06+08:00">2020-09-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/07/LRU/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -241,7 +184,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-09 13:12:02" itemprop="dateModified" datetime="2020-09-09T13:12:02+08:00">2020-09-09</time>
+                <time title="修改时间：2020-09-09 13:16:02" itemprop="dateModified" datetime="2020-09-09T13:16:02+08:00">2020-09-09</time>
               </span>
 
           
@@ -256,18 +199,15 @@
 
       
           <h1 id="Least-Recently-Used-LRU"><a href="#Least-Recently-Used-LRU" class="headerlink" title="Least Recently Used (LRU)"></a>Least Recently Used (LRU)</h1><p>最近最久使用算法<br>满足查询 $O(1)$，插入 $O(1)$，删除 $O(1)$<br>实现方式：<code>LinkedHashMap</code>，即双向链表 + 哈希表</p>
-<h1 id="Least-Frequently-Used-LFU"><a href="#Least-Frequently-Used-LFU" class="headerlink" title="Least Frequently Used (LFU)"></a>Least Frequently Used (LFU)</h1><p>最近最少使用算法<br>满足查询 $O(1)$，插入 $O(1)$，删除 $O(1)$<br>实现方式：<code>DLinkList&lt;DLinkList&gt;</code>，即以双向链表为节点的双向链表</p>
-<h2 id="双向列表"><a href="#双向列表" class="headerlink" title="双向列表"></a>双向列表</h2><p>c++ STL 可使用 <code>list&lt;Node*&gt;::iterator</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 链表节点</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> key, val;</span><br><span class="line">    <span class="keyword">int</span> freq; <span class="comment">// LFU</span></span><br><span class="line">    Node *prev, *next;</span><br><span class="line"></span><br><span class="line">    Node(<span class="keyword">int</span> k, <span class="keyword">int</span> v, <span class="keyword">int</span> f) &#123;</span><br><span class="line">        key = k, val = v;</span><br><span class="line">        freq = f; <span class="comment">// LFU</span></span><br><span class="line">        prev = next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>手写链表：画图模拟<br>双向链表：定义头尾指针，头尾指针是空的<br>c++ STL 可使用 <code>list&lt;Node*&gt;</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 双向链表</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DLinkList</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    DLinkList *prev, *next;  <span class="comment">// 双向链表的前继、后继</span></span><br><span class="line">    Node *head, *tail;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>;   </span><br><span class="line"></span><br><span class="line">    DLinkList() &#123;</span><br><span class="line">        head = <span class="keyword">new</span> Node(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        tail = <span class="keyword">new</span> Node(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        head-&gt;next = tail;</span><br><span class="line">        tail-&gt;prev = head;</span><br><span class="line">        <span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">        prev = next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新节点从后面插入</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> v, <span class="keyword">int</span> f)</span> </span>&#123;</span><br><span class="line">        Node *node = <span class="keyword">new</span> Node(k, v, f);</span><br><span class="line">        node-&gt;dlinkList = <span class="keyword">this</span>;</span><br><span class="line">        ++<span class="built_in">size</span>;</span><br><span class="line"></span><br><span class="line">        node-&gt;prev = tail-&gt;prev;</span><br><span class="line">        node-&gt;next = tail;</span><br><span class="line">        tail-&gt;prev-&gt;next = node;</span><br><span class="line">        tail-&gt;prev = node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="literal">nullptr</span>) <span class="keyword">return</span>;</span><br><span class="line">        node-&gt;prev-&gt;next = node-&gt;next;</span><br><span class="line">        node-&gt;next-&gt;prev = node-&gt;prev;</span><br><span class="line">        --<span class="built_in">size</span>;</span><br><span class="line"></span><br><span class="line">        node-&gt;prev = node-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">        node-&gt;dlinkList = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 最近使用</span></span><br><span class="line">    <span class="function">Node *<span class="title">back</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> tail-&gt;prev == head ? <span class="literal">nullptr</span> : tail-&gt;prev;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 最久未使用</span></span><br><span class="line">    <span class="function">Node *<span class="title">front</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> head-&gt;next == tail ? <span class="literal">nullptr</span> : head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">size</span> == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 测试用遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">travel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> *curr = head-&gt;next;</span><br><span class="line">        <span class="keyword">while</span> (curr != tail) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"(%d, %d, %d)-&gt;"</span>, curr-&gt;key, curr-&gt;val, curr-&gt;freq);</span><br><span class="line">            curr = curr-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="LinkedHashMap-LRU"><a href="#LinkedHashMap-LRU" class="headerlink" title="LinkedHashMap (LRU)"></a>LinkedHashMap (LRU)</h2><p>c++ STL 可使用 <code>unordered_map&lt;int, list&lt;int&gt;::iterator &gt;</code><br>实现了双向链表的查询 $O(1)$</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LinkedHashMap</span> :</span> <span class="keyword">public</span> DLinkList &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, Node *&gt; mp;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 插入新节点 O(1)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        DLinkList::push_back(k, v, <span class="number">1</span>);</span><br><span class="line">        mp[k] = DLinkList::back();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除节点 O(1)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">erase</span><span class="params">(Node *node)</span> </span>&#123;</span><br><span class="line">        mp.erase(node-&gt;key);</span><br><span class="line">        DLinkList::<span class="built_in">remove</span>(node);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查询节点 O(1)</span></span><br><span class="line">    <span class="function">Node *<span class="title">get</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mp.<span class="built_in">find</span>(k) == mp.<span class="built_in">end</span>() ? <span class="literal">nullptr</span> : mp[k];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="DLinkList-LFU"><a href="#DLinkList-LFU" class="headerlink" title="DLinkList (LFU)"></a>DLinkList<DLinkList> (LFU)</h2><p>以双向链表为节点的双向链表</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DDLinkList</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    DLinkList *head, *tail;</span><br><span class="line"></span><br><span class="line">    DDLinkList() &#123;</span><br><span class="line">        head = <span class="keyword">new</span> DLinkList();</span><br><span class="line">        tail = <span class="keyword">new</span> DLinkList();</span><br><span class="line">        head-&gt;next = tail;</span><br><span class="line">        tail-&gt;prev = head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 插入双向链表 O(1)</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(DLinkList *curr)</span> </span>&#123;</span><br><span class="line">        DLinkList *node = <span class="keyword">new</span> DLinkList();</span><br><span class="line">        node-&gt;next = curr-&gt;next;</span><br><span class="line">        node-&gt;prev = curr;</span><br><span class="line">        curr-&gt;next-&gt;prev = node;</span><br><span class="line">        curr-&gt;next = node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除双向链表</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(DLinkList *dLinkList)</span> </span>&#123;</span><br><span class="line">        dLinkList-&gt;prev-&gt;next = dLinkList-&gt;next;</span><br><span class="line">        dLinkList-&gt;next-&gt;prev = dLinkList-&gt;prev;</span><br><span class="line"></span><br><span class="line">        dLinkList-&gt;prev = dLinkList-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">DLinkList *<span class="title">front</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> head-&gt;next == tail ? <span class="literal">nullptr</span> : head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">DLinkList *<span class="title">back</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> tail-&gt;prev == head ? <span class="literal">nullptr</span> : tail-&gt;prev;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 测试用遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">travel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> curr = head-&gt;next;</span><br><span class="line">        <span class="keyword">while</span> (curr != tail) &#123;</span><br><span class="line">            curr-&gt;travel();</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">            curr = curr-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><p>实际操作只有一条链表，哈希表只是映射<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LRU</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    LinkedHashMap *linkedHashMap;</span><br><span class="line">    <span class="keyword">int</span> cap, <span class="built_in">size</span>;</span><br><span class="line"></span><br><span class="line">    LRU(<span class="keyword">int</span> c) &#123;</span><br><span class="line">        cap = c;   </span><br><span class="line">        <span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">        linkedHashMap = <span class="keyword">new</span> LinkedHashMap();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (linkedHashMap-&gt;<span class="built_in">get</span>(key) == <span class="literal">nullptr</span>) &#123;                   <span class="comment">// 不在链表中</span></span><br><span class="line">            ++<span class="built_in">size</span>;</span><br><span class="line">            <span class="comment">// 超出容量</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">size</span> &gt; cap) &#123;       </span><br><span class="line">                linkedHashMap-&gt;erase(linkedHashMap-&gt;front());</span><br><span class="line">                --<span class="built_in">size</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            linkedHashMap-&gt;erase(linkedHashMap-&gt;<span class="built_in">get</span>(key));          <span class="comment">// 已经在链表中，需要更新</span></span><br><span class="line">        &#125;</span><br><span class="line">        linkedHashMap-&gt;<span class="built_in">put</span>(key, val);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> it = linkedHashMap-&gt;<span class="built_in">get</span>(key);</span><br><span class="line">        <span class="keyword">if</span> (it == <span class="literal">nullptr</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="comment">// 已经在链表中，需要更新</span></span><br><span class="line">        <span class="keyword">int</span> val = it-&gt;val;</span><br><span class="line">        linkedHashMap-&gt;erase(it);</span><br><span class="line">        linkedHashMap-&gt;<span class="built_in">put</span>(key, val);</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="LFU"><a href="#LFU" class="headerlink" title="LFU"></a>LFU</h2><p>对单独的每一条双向链表，满足 <code>front()</code> 是最久未使用的， <code>back()</code> 是最近使用的<br>对 <code>DLinkList&lt;DLinkList&gt;</code> 来说，满足 <code>front()</code> 是频率最小的双向链表</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LFU</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>, cap;</span><br><span class="line">    <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, Node *&gt; cache;</span><br><span class="line">    DDLinkList *ddLinkList;</span><br><span class="line"></span><br><span class="line">    LFU(<span class="keyword">int</span> c) &#123;</span><br><span class="line">        <span class="built_in">size</span> = <span class="number">0</span>;</span><br><span class="line">        cap = c;</span><br><span class="line">        ddLinkList = <span class="keyword">new</span> DDLinkList();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (cache.<span class="built_in">find</span>(key) == cache.<span class="built_in">end</span>()) &#123;</span><br><span class="line">            ++<span class="built_in">size</span>;</span><br><span class="line">            <span class="comment">// 超出容量</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">size</span> &gt; cap) &#123;</span><br><span class="line">                <span class="comment">// 删除频率最低，最迟未使用的节点</span></span><br><span class="line">                <span class="keyword">auto</span> fl = ddLinkList-&gt;front();</span><br><span class="line">                <span class="keyword">auto</span> node = fl-&gt;front();</span><br><span class="line">                cache.erase(node-&gt;key);</span><br><span class="line">                fl-&gt;<span class="built_in">remove</span>(node);</span><br><span class="line">                <span class="comment">// 删除后的链表是否为空</span></span><br><span class="line">                <span class="keyword">if</span> (fl-&gt;empty()) ddLinkList-&gt;<span class="built_in">remove</span>(fl);</span><br><span class="line">                --<span class="built_in">size</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 插入新节点</span></span><br><span class="line">            <span class="keyword">if</span> (ddLinkList-&gt;front() == <span class="literal">nullptr</span> || ddLinkList-&gt;front()-&gt;back()-&gt;freq != <span class="number">1</span>) &#123;</span><br><span class="line">                ddLinkList-&gt;insert(ddLinkList-&gt;head);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">auto</span> curr_list = ddLinkList-&gt;front();</span><br><span class="line">            curr_list-&gt;push_back(key, val, <span class="number">1</span>);</span><br><span class="line">            cache[key] = curr_list-&gt;back();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// freq ++</span></span><br><span class="line">            Node *node = cache[key];</span><br><span class="line">            <span class="keyword">auto</span> curr_list = node-&gt;dlinkList;</span><br><span class="line">            <span class="keyword">int</span> freq = node-&gt;freq;</span><br><span class="line">            curr_list-&gt;<span class="built_in">remove</span>(node);</span><br><span class="line">            <span class="keyword">if</span> (curr_list-&gt;next == ddLinkList-&gt;tail || curr_list-&gt;next-&gt;back()-&gt;freq != freq + <span class="number">1</span>) &#123;</span><br><span class="line">                ddLinkList-&gt;insert(curr_list);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">auto</span> next_list = curr_list-&gt;next;</span><br><span class="line">            next_list-&gt;push_back(key, val, freq + <span class="number">1</span>);</span><br><span class="line">            cache[key] = next_list-&gt;back();</span><br><span class="line">            <span class="comment">// 更新后原链表是否为空</span></span><br><span class="line">            <span class="keyword">if</span> (curr_list-&gt;empty()) ddLinkList-&gt;<span class="built_in">remove</span>(curr_list);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> it = cache.<span class="built_in">find</span>(key);</span><br><span class="line">        <span class="keyword">if</span> (it == cache.<span class="built_in">end</span>()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// freq ++</span></span><br><span class="line">        Node *node = it-&gt;second;</span><br><span class="line">        <span class="keyword">auto</span> curr_list = node-&gt;dlinkList;</span><br><span class="line">        <span class="keyword">int</span> freq = node-&gt;freq, val = node-&gt;val;</span><br><span class="line">        curr_list-&gt;<span class="built_in">remove</span>(node);</span><br><span class="line">        <span class="keyword">if</span> (curr_list-&gt;next == ddLinkList-&gt;tail || curr_list-&gt;next-&gt;back()-&gt;freq != freq + <span class="number">1</span>) &#123;</span><br><span class="line">            ddLinkList-&gt;insert(curr_list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">auto</span> next_list = curr_list-&gt;next;</span><br><span class="line">        next_list-&gt;push_back(key, val, freq + <span class="number">1</span>);</span><br><span class="line">        cache[key] = next_list-&gt;back();</span><br><span class="line">        <span class="comment">// 更新后原链表是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (curr_list-&gt;empty()) ddLinkList-&gt;<span class="built_in">remove</span>(curr_list);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Least-Frequently-Used-LFU"><a href="#Least-Frequently-Used-LFU" class="headerlink" title="Least Frequently Used (LFU)"></a>Least Frequently Used (LFU)</h1><p>最近最少使用算法<br>满足查询 $O(1)$，插入 $O(1)$，删除 $O(1)$<br>实现方式：<code>DLinkList&lt;DLinkList&gt;</code>，即以双向链表为节点的双向链表<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/07/LRU/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -888,6 +828,82 @@
   
   
 
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/acwing-graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/13/acwing-graph/" class="post-title-link" itemprop="url">树和图</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-13 23:27:45" itemprop="dateCreated datePublished" datetime="2020-05-13T23:27:45+08:00">2020-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-20 16:11:06" itemprop="dateModified" datetime="2020-08-20T16:11:06+08:00">2020-08-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>对 0….n-1 共 $n$ 个点组成的图，一共有 $m$ 条边</p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>邻接矩阵：<br><code>vector&lt;vector&lt;int&gt;&gt; graph(n, vector&lt;int&gt;(n, 0))</code><br><code>graph[a][b]</code>：a -&gt; b 的权值</p>
+<p>不能开太大，比如 N = 1e4：</p>
+<script type="math/tex; mode=display">1e4 * 1e4 * sizeof(int) = 381MB</script><p>无权值存储：<br><code>vector&lt;int&gt; graph[N]</code></p>
+<p>邻接表： PII : pair<int,int><br><code>unordered_map&lt;int, list&lt;&lt;PII&gt;&gt; &gt; graph</code><br><code>graph[a]</code>： 与 a 连接的所有点<br><code>graph[a][i].first</code>：a 与 b 连接<br><code>graph[a][i].second</code>：a -&gt; b 的权值</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/13/acwing-graph/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
   </div>
 
   
@@ -958,7 +974,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
