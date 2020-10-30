@@ -153,6 +153,72 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/30/matrix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/30/matrix/" class="post-title-link" itemprop="url">matrix</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-30 10:21:38 / 修改时间：10:52:08" itemprop="dateCreated datePublished" datetime="2020-10-30T10:21:38+08:00">2020-10-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; pii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;pii&gt; vpii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;vpii&gt; matrix;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/30/matrix/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/13/kmp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -178,7 +244,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-10-13 17:15:47 / 修改时间：23:05:29" itemprop="dateCreated datePublished" datetime="2020-10-13T17:15:47+08:00">2020-10-13</time>
+              <time title="创建时间：2020-10-13 17:15:47 / 修改时间：23:25:28" itemprop="dateCreated datePublished" datetime="2020-10-13T17:15:47+08:00">2020-10-13</time>
             </span>
 
           
@@ -193,12 +259,15 @@
 
       
           <h2 id="模式串的简易状态机"><a href="#模式串的简易状态机" class="headerlink" title="模式串的简易状态机"></a>模式串的简易状态机</h2><p>设状态机 <code>ne[i]</code> 为匹配到第<code>i</code>个字符时，如果匹配失败，则回退到第<code>ne[i]</code>个字符（<code>i</code>从<code>1</code>开始）</p>
-<p>初始 <code>ne[0] = -1</code><br>例：模式串 <code>p = &quot;ababac&quot;</code><br>获得的状态机为：<br><code>ne[] = {-1, 0, 0, 1, 2, 3, 0}</code>，如下图<br><img src="./../images/kmp_1.png" alt="avatar"></p>
-<h2 id="状态机生成"><a href="#状态机生成" class="headerlink" title="状态机生成"></a>状态机生成</h2><p>相当于跟自己匹配<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">get_next</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;p)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ne = &#123;<span class="number">-1</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; p.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">-1</span> || p[i] == p[j]) &#123;</span><br><span class="line">            ++i, ++j;</span><br><span class="line">            <span class="comment">// 生成新状态</span></span><br><span class="line">            ne.push_back(j);</span><br><span class="line">        &#125; <span class="keyword">else</span> j = ne[j];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ne;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* s： 字符集</span></span><br><span class="line"><span class="comment">* p: 模式串</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">auto</span> ne = get_next(p);</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (i &lt; s.<span class="built_in">size</span>()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (j == <span class="number">-1</span> || s[i] == p[j]) &#123;</span><br><span class="line">        ++i, ++j;</span><br><span class="line">            <span class="comment">// 匹配成功</span></span><br><span class="line">        <span class="keyword">if</span> (j == p.<span class="built_in">size</span>()) &#123;</span><br><span class="line">            <span class="keyword">int</span> pos = i - p.<span class="built_in">size</span>();</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, pos);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> j = ne[j];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="有限状态机"><a href="#有限状态机" class="headerlink" title="有限状态机"></a>有限状态机</h2><p>对一般状态机来说，对每个字符都可能有多个次态，但在KMP算法中是需要匹配完整的模式串，一旦匹配失败要考虑从头开始，故有限状态机其实作用并不大，但对一些特殊的模式串来说可以加快状态机构造速度</p>
-<h2 id="状态机生成-1"><a href="#状态机生成-1" class="headerlink" title="状态机生成"></a>状态机生成</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 状态表示： 0 ~ p.size() 表示匹配到第 i 个字符了</span></span><br><span class="line"><span class="comment"> * @param p </span></span><br><span class="line"><span class="comment"> * @return dfa[i][ch] 匹配到第 i 个字符时，如果该字符是 ch，则次态是 dfa[i][ch] (i 从 0 开始)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">vector&lt;unordered_map&lt;char, int&gt;&gt; make_dfa(const string &amp;p) &#123;</span><br><span class="line">    vector&lt;unordered_map&lt;char, int&gt;&gt; state(p.size());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 也可以开 [128]，这样会节省空间</span></span><br><span class="line">    <span class="built_in">unordered_set</span>&lt;<span class="keyword">char</span>&gt; chs;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;c : p) chs.insert(c);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初态</span></span><br><span class="line">    <span class="keyword">int</span> current_state = <span class="number">0</span>;</span><br><span class="line">    state[current_state][p[<span class="number">0</span>]] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; p.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;c : chs) &#123;</span><br><span class="line">            <span class="comment">// 状态转移</span></span><br><span class="line">            state[i][c] = state[current_state][c];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 状态更新</span></span><br><span class="line">        state[i][p[i]] = i + <span class="number">1</span>;</span><br><span class="line">        current_state = state[current_state][p[i]];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> state;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="匹配-1"><a href="#匹配-1" class="headerlink" title="匹配"></a>匹配</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* s： 字符集</span></span><br><span class="line"><span class="comment">* p: 模式串</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">auto</span> dfa = make_dfa(p);</span><br><span class="line"><span class="keyword">int</span> current_state = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">    current_state = dfa[current_state][s[i]];</span><br><span class="line">    <span class="keyword">if</span> (current_state == p.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="comment">// 匹配成功</span></span><br><span class="line">        <span class="keyword">int</span> pos = i - p.<span class="built_in">size</span>() + <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"pos: %d\n"</span>, pos);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始 <code>ne[0] = -1</code><br>例：模式串 <code>p = &quot;ababac&quot;</code><br>获得的状态机为：<br><code>ne[] = {-1, 0, 0, 1, 2, 3, 0}</code>，如下图<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/13/kmp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -830,79 +899,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/17/acwing-basic-datastruct/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/17/acwing-basic-datastruct/" class="post-title-link" itemprop="url">acwing常用数据结构</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-17 00:01:43" itemprop="dateCreated datePublished" datetime="2020-07-17T00:01:43+08:00">2020-07-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-15 13:38:12" itemprop="dateModified" datetime="2020-09-15T13:38:12+08:00">2020-09-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!s.empty() &amp;&amp; check(s.top(), x)) s.pop();</span><br><span class="line">    <span class="comment">// 栈顶是最大值</span></span><br><span class="line">    s.push(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
-<li>最长上坡 (lc 962)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">若有：j &gt; i &amp;&amp; A[j] &gt;&#x3D; A[i]</span><br><span class="line">求 max(len(i, j))</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="单调队列（滑动窗口）"><a href="#单调队列（滑动窗口）" class="headerlink" title="单调队列（滑动窗口）"></a>单调队列（滑动窗口）</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; dq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_1( dq.front() ) ) dq.pop_front();</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_2( dq.<span class="built_in">end</span>() , x) ) dq.pop_back();</span><br><span class="line">    <span class="comment">// 队首是最大值</span></span><br><span class="line">    dq.push_back(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 判断是否收缩窗口，一般是窗口大小受限</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="字典树"><a href="#字典树" class="headerlink" title="字典树"></a>字典树</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Trie* children[<span class="number">26</span>] = &#123; <span class="literal">nullptr</span> &#125;;</span><br><span class="line">    <span class="keyword">bool</span> is_end = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Trie() &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> &amp;<span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> *curr = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : <span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!curr-&gt;children[w - <span class="string">'a'</span>]) &#123;</span><br><span class="line">                curr-&gt;children[w - <span class="string">'a'</span>] = <span class="keyword">new</span> Trie();</span><br><span class="line">            &#125;</span><br><span class="line">            curr = curr-&gt;children[w - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        curr-&gt;is_end = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> p[N]; <span class="comment">// 父节点</span></span><br><span class="line"><span class="keyword">int</span> sizes[N]; <span class="comment">// 节点数</span></span><br><span class="line"><span class="keyword">int</span> d[N]; <span class="comment">// 节点到父节点的距离</span></span><br><span class="line"><span class="keyword">int</span> ranks[N]; <span class="comment">// 秩</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= N; ++i) &#123;</span><br><span class="line">        p[i] = i;</span><br><span class="line">        sizes[i] = <span class="number">1</span>;</span><br><span class="line">        d[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路径压缩</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p[a] != a) &#123;</span><br><span class="line">        p[a] = <span class="built_in">find</span>(p[a]);  <span class="comment">// 更新父节点</span></span><br><span class="line">        d[a] += d[p[a]]; <span class="comment">// 更新距离</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p[a];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并集合</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pa = <span class="built_in">find</span>(a), pb = <span class="built_in">find</span>(b);</span><br><span class="line">    <span class="keyword">if</span> (pa != pb) &#123;</span><br><span class="line">        <span class="comment">// 根据实际情况判断 pa 指向 pb 还是 pb 指向 pa</span></span><br><span class="line">        p[pa] = pb;</span><br><span class="line">        d[pa] = sizes[pb];    <span class="comment">// 更新距离</span></span><br><span class="line">        sizes[pb] += sizes[pa]; <span class="comment">// 更新节点数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启发式合并</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeByRank</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">int</span> pa = <span class="built_in">find</span>(a), pb = <span class="built_in">find</span>(b);</span><br><span class="line">    <span class="comment">// 秩小的树合并到秩大的树</span></span><br><span class="line">    <span class="keyword">if</span> (ranks[pa] &gt; ranks[pb]) &#123;</span><br><span class="line">        p[pb] = pa;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ranks[pb] &lt; ranks[pa]) &#123;</span><br><span class="line">        p[pa] = pb;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 秩相同时看实际情况合并，比如按节点大小合并</span></span><br><span class="line">        p[pa] = pb;</span><br><span class="line">        sizes[pb] += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>启发式合并作用其实不大，而且在考虑父子节点关系的时候不能和路径压缩连用<br><del>所以说最好还是不用启发式合并</del></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -973,7 +969,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
