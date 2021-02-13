@@ -153,7 +153,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/vultr/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/06/binary-indexed-tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -167,7 +167,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/24/vultr/" class="post-title-link" itemprop="url">vultr 快速搭建 ss</a>
+            <a href="/2020/09/06/binary-indexed-tree/" class="post-title-link" itemprop="url">树状数组</a>
         </h1>
 
         <div class="post-meta">
@@ -176,21 +176,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-02-24 10:13:54 / 修改时间：10:34:41" itemprop="dateCreated datePublished" datetime="2020-02-24T10:13:54+08:00">2020-02-24</time>
+              <time title="创建时间：2020-09-06 19:10:36" itemprop="dateCreated datePublished" datetime="2020-09-06T19:10:36+08:00">2020-09-06</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A7%91%E6%8A%80/" itemprop="url" rel="index">
-                    <span itemprop="name">科技</span>
-                  </a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
                 </span>
-            </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-16 12:48:56" itemprop="dateModified" datetime="2020-09-16T12:48:56+08:00">2020-09-16</time>
+              </span>
 
           
 
@@ -203,10 +198,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</span><br><span class="line">chmod +x shadowsocks.sh</span><br><span class="line">./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</span><br></pre></td></tr></table></figure>
-<p>ss加密方式：选 13 </p>
-<p>适用于 <code>Centos 6, 7</code>  </p>
-<p>dns污染：<code>ipconfig /flushdns</code></p>
+          <h2 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h2><p>主要解决两个问题</p>
+<ol>
+<li>快速求前缀和</li>
+<li>快速修改一个元素</li>
+</ol>
+<h3 id="原数组"><a href="#原数组" class="headerlink" title="原数组"></a>原数组</h3><ol>
+<li>求前缀和 $O(N)$</li>
+<li>修改元素 $O(1)$</li>
+</ol>
+<h3 id="前缀和数组"><a href="#前缀和数组" class="headerlink" title="前缀和数组"></a>前缀和数组</h3><ol>
+<li>求前缀和 $O(1)$</li>
+<li>修改元素 $O(N)$</li>
+</ol>
+<h3 id="树状数组-1"><a href="#树状数组-1" class="headerlink" title="树状数组"></a>树状数组</h3><ol>
+<li>求前缀和 $O(\log N)$</li>
+<li>修改元素 $O(\log N)$</li>
+</ol>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BIT</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x &amp; -x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    BIT(<span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;n = n + <span class="number">5</span>;</span><br><span class="line">        tree.resize(<span class="keyword">this</span>-&gt;n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  单点修改    O(logN)</span></span><br><span class="line"><span class="comment">     *  原数组 a[i] += v</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; <span class="keyword">this</span>-&gt;n) &#123;</span><br><span class="line">            tree[i] += v;</span><br><span class="line">            i += lowbit(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  区间修改    O(logN)</span></span><br><span class="line"><span class="comment">     *  原数组 a[i, j] 都加上 v</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        update(i, v);</span><br><span class="line">        update(j, -v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  单点查询    O(logN)</span></span><br><span class="line"><span class="comment">     *  查询前缀和 S[i]</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        i = <span class="built_in">min</span>(i, n);</span><br><span class="line">        <span class="keyword">int</span> s = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i) &#123;</span><br><span class="line">            s += tree[i];</span><br><span class="line">            i -= lowbit(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  区间查询    O(logN)</span></span><br><span class="line"><span class="comment">     *  查询前缀和 S[i, j]</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getSum(j) - getSum(i - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -226,7 +235,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/DeepLearning/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/04/sql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -240,7 +249,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/24/DeepLearning/" class="post-title-link" itemprop="url">深度学习与接口</a>
+            <a href="/2020/09/04/sql/" class="post-title-link" itemprop="url">sql</a>
         </h1>
 
         <div class="post-meta">
@@ -249,21 +258,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-02-24 10:13:16 / 修改时间：10:32:02" itemprop="dateCreated datePublished" datetime="2020-02-24T10:13:16+08:00">2020-02-24</time>
+              <time title="创建时间：2020-09-04 10:58:16" itemprop="dateCreated datePublished" datetime="2020-09-04T10:58:16+08:00">2020-09-04</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E6%B2%BF/" itemprop="url" rel="index">
-                    <span itemprop="name">前沿</span>
-                  </a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
                 </span>
-            </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-05 21:10:59" itemprop="dateModified" datetime="2020-09-05T21:10:59+08:00">2020-09-05</time>
+              </span>
 
           
 
@@ -276,12 +280,193 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>关于深度学习部署在Web应用，不过我是在做微信小程序的接口而写的日志，感觉应该也适用于一般Web程序</p>
-<h2 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h2><p>Ubuntu 14.04<br>Nginx<br>python2.7  python3.5<br>php5+<br>tensorflow<br>cv2<br>Flask  </p>
-<h2 id="实际环境"><a href="#实际环境" class="headerlink" title="实际环境"></a>实际环境</h2><p><del>由于我自己并不是很懂深度学习</del><br>根据提供的环境，cv2是用pip3安装的，只能用python3跑<br>
+          <h2 id="SELECT-WHERE"><a href="#SELECT-WHERE" class="headerlink" title="SELECT WHERE"></a>SELECT WHERE</h2><ol>
+<li>name = ‘france’          </li>
+<li>name IN (‘a’, ‘b’, ‘c’)</li>
+<li>number BETWEEN 100 AND 200</li>
+<li>number &gt;= 1000</li>
+<li>a LIKE ‘%a’          — % 为任意匹配符，即匹配以 a 结尾</li>
+<li>a LIKE ‘a%’          — 以 a 开头</li>
+<li>a LIKE ‘%a%’         — 包含 a </li>
+<li>NOT / OR / AND / XOR</li>
+<li>比较符： <code>=</code>，<code>!=</code>，<code>&lt;&gt;</code>  </li>
+<li>IS NULL  — 空值</li>
+</ol>
+<h2 id="SELECT-字段"><a href="#SELECT-字段" class="headerlink" title="SELECT 字段"></a>SELECT 字段</h2><ol>
+<li>boolean，如 name in (‘John’)</li>
+<li>COUNT() SUM()</li>
+<li>CASE<br>WHEN a THEN 1<br>WHEN b THEN 2<br>……<br>ELSE 0<br>END — 多条件</li>
+<li>临时表，如 <code>Select a.b From (Select b From c) As a</code></li>
+</ol>
+<h2 id="ORDER-BY"><a href="#ORDER-BY" class="headerlink" title="ORDER BY"></a>ORDER BY</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">多条件排序：</span><br><span class="line">    Order By a, b, c</span><br><span class="line">    按 a 排序，a 相同时按 b 排序，b 相同时按 c 排序 .....</span><br><span class="line"></span><br><span class="line">默认升序 asc</span><br><span class="line">降序 desc</span><br></pre></td></tr></table></figure>
+<h2 id="SELECT-子查询"><a href="#SELECT-子查询" class="headerlink" title="SELECT 子查询"></a>SELECT 子查询</h2><p>嵌套 SELECT 实际上是多层 for 循环</p>
+<ol>
+<li>WHERE a &gt; (SELECT ….)</li>
+<li>SELECT t1.a / t2.b FROM t1, (SELECT b) AS t2</li>
+<li>x &gt;= ALL(SELECT * )  — ALL 是右值，保证 ALL 内没有 NULL</li>
+</ol>
+<h2 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h2><ol>
+<li>Sum</li>
+<li>Distinct</li>
+<li>Count   </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Group By：</span><br><span class="line">    当聚合函数（如 SUM） 的目标字段有重复值时，需要再后面加上 Group By</span><br><span class="line">    </span><br><span class="line">    Group By a, b</span><br><span class="line">        先按 a 分组，相同时再按 b 分组</span><br><span class="line">        若单一变量无法彻底分组则需要多个变量</span><br><span class="line"></span><br><span class="line">Having：</span><br><span class="line">    Where 不能用聚合函数，想要使用聚合函数作为条件，需要用 Having </span><br><span class="line">        如：Group By ...  Having SUM(a) &#x3D; 100</span><br></pre></td></tr></table></figure>
+<h2 id="Join-On"><a href="#Join-On" class="headerlink" title="Join On"></a>Join On</h2><p>减少子查询<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">From t1 </span><br><span class="line">    Join t2 On t1.aid = t2.id </span><br><span class="line">    Join t3 On t1.bid = t3.id</span><br><span class="line"></span><br><span class="line">INNER JOIN</span><br><span class="line">LEFT JOIN</span><br><span class="line">RIGHT JOIN</span><br><span class="line">FULL JOIN</span><br><span class="line"></span><br><span class="line">自连接</span><br></pre></td></tr></table></figure></p>
+<h2 id="多条件-Select"><a href="#多条件-Select" class="headerlink" title="多条件 Select"></a>多条件 Select</h2><p>思考顺序：从里到外<br>因为条件优先级：从里到外</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ol>
+<li>Coalesce(字段,替代值)    将空值转化为替代值</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/02/acwing-dp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/02/acwing-dp/" class="post-title-link" itemprop="url">acwing-dp</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-02 16:22:49" itemprop="dateCreated datePublished" datetime="2020-09-02T16:22:49+08:00">2020-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-11 15:27:17" itemprop="dateModified" datetime="2020-09-11T15:27:17+08:00">2020-09-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="DP模型"><a href="#DP模型" class="headerlink" title="DP模型"></a>DP模型</h1><p>分析方法：定义集合、属性、状态计算（找出获得当前 dp[i] 的上一步）</p>
+<h2 id="数字三角形模型"><a href="#数字三角形模型" class="headerlink" title="数字三角形模型"></a>数字三角形模型</h2><p>路径 dp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">基本问题：二维矩阵中，从左上角到右下角的最小代价  </span><br><span class="line">定义：dp[i][j] </span><br><span class="line">集合：从 (0,0) 到 (i, j) 的走法</span><br><span class="line">属性：Min</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：从左边的格子来、从上面的格子来</span><br><span class="line">    即 dp[i][j] &#x3D; A[i][j] + min(dp[i - 1][j], dp[i][j - 1])</span><br><span class="line">初始值：</span><br><span class="line">    dp[0][0] &#x3D; A[0][0]</span><br></pre></td></tr></table></figure>
+<p>类似题型：最长公共子序列（LCS）、编辑距离、最多不交叉连线问题</p>
+<h2 id="最长上升子序列模型（LIS）"><a href="#最长上升子序列模型（LIS）" class="headerlink" title="最长上升子序列模型（LIS）"></a>最长上升子序列模型（LIS）</h2><p>序列 dp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">基本问题：一维数组中，求出最长的一组上升子序列的长度</span><br><span class="line">定义：dp[i]</span><br><span class="line">集合：以 A[i] 为结尾的上升子序列</span><br><span class="line">属性：Max</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：j &lt; i 中，满足 A[j] &lt; A[i]（上升条件）即可</span><br><span class="line">    即 dp[i] &#x3D; max(dp[0......j])</span><br><span class="line">初始值：</span><br><span class="line">    dp[i] &#x3D; 1 （自身就是一个上升子序列）</span><br></pre></td></tr></table></figure>
+<p>类似题型：最长下降子序列、俄罗斯套娃问题</p>
+<h2 id="背包模型"><a href="#背包模型" class="headerlink" title="背包模型"></a>背包模型</h2><p>有限制选择 dp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">基本问题：N 个物品中，每个物品最多可以选 s 次，求选择完后总体积不超过 V 的最大价值</span><br><span class="line">定义：dp[i][j] </span><br><span class="line">集合：前 i 个物品中，总体积不超过 j 的选法</span><br><span class="line">属性：Max</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：选完前 i - 1 个物品，第 i 个物品选 0 - s 次</span><br><span class="line">初始状态：</span><br><span class="line">    如果问题是 “总体积正好为 V ” ，则：</span><br><span class="line">        memset(dp, INF, sizeof(dp))</span><br><span class="line">    否则：</span><br><span class="line">        memset(dp, 0, sizeof(dp))</span><br><span class="line">    但初始值 dp[0][0] &#x3D; 0</span><br></pre></td></tr></table></figure>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> v[N], w[N], s[N]; </span><br><span class="line"><span class="comment">// 体积、价值、选法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= V; ++j) &#123;</span><br><span class="line">        dp[i][j] = dp[i - <span class="number">1</span>][j];  <span class="comment">// 选 0 次</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= s[i]; ++k) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j - k * v[i] &lt; <span class="number">0</span>) <span class="keyword">break</span>;  <span class="comment">// 已超出背包体积，不需要再继续 </span></span><br><span class="line">            dp[i][j] = <span class="built_in">max</span>(dp[i][j], dp[i - <span class="number">1</span>][j - k * v[i]] + k * w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="滚动数组"><a href="#滚动数组" class="headerlink" title="滚动数组"></a>滚动数组</h3><p>如果要优化到滚动数组，则对遍历顺序有要求  </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 01 背包滚动数组模板</span></span><br><span class="line"><span class="keyword">int</span> dp[V + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = V; j &gt;= v[i]; --j) &#123;  <span class="comment">// 逆序</span></span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似题型：分成两个子集问题、多维01背包问题</p>
+<h2 id="状态机模型"><a href="#状态机模型" class="headerlink" title="状态机模型"></a>状态机模型</h2><p>多状态 dp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">基本问题：从前走到后，可能会有 k 个状态，求最终的最大收益</span><br><span class="line">定义：dp[i][j]</span><br><span class="line">集合：走到 i 步时处于状态 j</span><br><span class="line">属性：Max</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：状态机</span><br><span class="line">    枚举每个状态的更新</span><br><span class="line">初始状态：</span><br><span class="line">    起始状态无法到达的应标记为 dp[0][j] &#x3D; INF</span><br></pre></td></tr></table></figure>
+<h2 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h2><p>使用<strong>二进制</strong>进行状态压缩<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">基本问题：一共有 n 个元素，每个元素处于选与不选，选择后会产生状态，求最终受益</span><br><span class="line">定义：dp[i]</span><br><span class="line">集合：选择状态为 i 的时候的最终受益</span><br><span class="line">属性：Max&#x2F;Min&#x2F;Count</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：dp[i]</span><br><span class="line">        i : 0 ~ (1 &lt;&lt; n)</span><br><span class="line">    dp[i | (1 &lt;&lt; j)] &#x3D; dp[i] + choose(j) </span><br><span class="line">        choose(j) : 选择了元素 j 后的产生的受益</span><br><span class="line">        i | (1 &lt;&lt; j) : 选择了元素 j 后的状态</span><br></pre></td></tr></table></figure></p>
+<h3 id="状态枚举与子集"><a href="#状态枚举与子集" class="headerlink" title="状态枚举与子集"></a>状态枚举与子集</h3><p>对状态 <code>mask = 0b1101</code>，遍历他的子集<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> subset = mask; subset ; subset = mask &amp; (subset - <span class="number">1</span>))</span><br></pre></td></tr></table></figure></p>
+<p>判断 <code>subset</code> 是否为子集<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> subset, <span class="keyword">int</span> mask)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mask &amp; subset == subset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>减去子集<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[mask] = <span class="built_in">min</span>(dp[mask], dp[mask ^ subset] + <span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/29/manacher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/29/manacher/" class="post-title-link" itemprop="url">manacher</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-29 20:44:46" itemprop="dateCreated datePublished" datetime="2020-08-29T20:44:46+08:00">2020-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-30 00:33:17" itemprop="dateModified" datetime="2020-08-30T00:33:17+08:00">2020-08-30</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="马拉车算法解决回文子串问题"><a href="#马拉车算法解决回文子串问题" class="headerlink" title="马拉车算法解决回文子串问题"></a>马拉车算法解决回文子串问题</h2>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/24/DeepLearning/#more" rel="contents">
+              <a class="btn" href="/2020/08/29/manacher/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -305,7 +490,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/nginx/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/20/bfs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -319,7 +504,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/24/nginx/" class="post-title-link" itemprop="url">Centos7 下 LNMP</a>
+            <a href="/2020/08/20/bfs/" class="post-title-link" itemprop="url">算法相关问题 1</a>
         </h1>
 
         <div class="post-meta">
@@ -328,21 +513,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-02-24 10:02:30 / 修改时间：10:32:34" itemprop="dateCreated datePublished" datetime="2020-02-24T10:02:30+08:00">2020-02-24</time>
+              <time title="创建时间：2020-08-20 16:07:11" itemprop="dateCreated datePublished" datetime="2020-08-20T16:07:11+08:00">2020-08-20</time>
             </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index">
-                    <span itemprop="name">服务器</span>
-                  </a>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
                 </span>
-            </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-06 19:13:21" itemprop="dateModified" datetime="2020-09-06T19:13:21+08:00">2020-09-06</time>
+              </span>
 
           
 
@@ -355,13 +535,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="宝塔一键快速安装"><a href="#宝塔一键快速安装" class="headerlink" title="宝塔一键快速安装"></a>宝塔一键快速安装</h2><blockquote>
-<p><a href="https://www.bt.cn/bbs/thread-19376-1-1.html" target="_blank" rel="noopener">https://www.bt.cn/bbs/thread-19376-1-1.html</a></p>
-</blockquote>
-<p>记得保存<strong>宝塔用的</strong>账号和密码<br>
+          <p>BFS、二分、欧拉回路、LIS<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/24/nginx/#more" rel="contents">
+              <a class="btn" href="/2020/08/20/bfs/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -385,7 +562,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/docker/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/avl/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -399,7 +576,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/24/docker/" class="post-title-link" itemprop="url">docker</a>
+            <a href="/2020/07/20/avl/" class="post-title-link" itemprop="url">AVL 树</a>
         </h1>
 
         <div class="post-meta">
@@ -410,18 +587,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 09:51:50 / 修改时间：10:32:08" itemprop="dateCreated datePublished" datetime="2020-02-24T09:51:50+08:00">2020-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index">
-                    <span itemprop="name">服务器</span>
-                  </a>
-                </span>
+              <time title="创建时间：2020-07-20 21:33:26 / 修改时间：21:59:44" itemprop="dateCreated datePublished" datetime="2020-07-20T21:33:26+08:00">2020-07-20</time>
             </span>
 
           
@@ -435,10 +601,304 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p><img src="/images/docker_1.png" alt="avatar"><br>
+          <h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    TreeNode *left, *right;</span><br><span class="line"></span><br><span class="line">    TreeNode(<span class="keyword">int</span> v) &#123;</span><br><span class="line">        val = v;</span><br><span class="line">        left = right = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/24/docker/#more" rel="contents">
+              <a class="btn" href="/2020/07/20/avl/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/17/acwing-basic-datastruct/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/17/acwing-basic-datastruct/" class="post-title-link" itemprop="url">acwing常用数据结构</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-17 00:01:43" itemprop="dateCreated datePublished" datetime="2020-07-17T00:01:43+08:00">2020-07-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-11 16:15:47" itemprop="dateModified" datetime="2020-11-11T16:15:47+08:00">2020-11-11</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!s.empty() &amp;&amp; check(s.top(), x)) s.pop();</span><br><span class="line">    <span class="comment">// 栈顶是最大值</span></span><br><span class="line">    s.push(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
+<li>最长上坡 (lc 962)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">若有：j &gt; i &amp;&amp; A[j] &gt;&#x3D; A[i]</span><br><span class="line">求 max(len(i, j))</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="单调队列（滑动窗口）"><a href="#单调队列（滑动窗口）" class="headerlink" title="单调队列（滑动窗口）"></a>单调队列（滑动窗口）</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; dq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_1( dq.front() ) ) dq.pop_front();</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_2( dq.<span class="built_in">end</span>() , x) ) dq.pop_back();</span><br><span class="line">    <span class="comment">// 队首是最大值</span></span><br><span class="line">    dq.push_back(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 判断是否收缩窗口，一般是窗口大小受限</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组实现循环队列"><a href="#数组实现循环队列" class="headerlink" title="数组实现循环队列"></a>数组实现循环队列</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Q[N + <span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> <span class="built_in">size</span> = N + <span class="number">1</span>, front = <span class="number">0</span>, rear = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 空</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> front == rear;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 满</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isFull</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (rear + <span class="number">1</span>) % <span class="built_in">size</span> == front;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入，对循环队列来说是从队尾插入</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isFull()) &#123;</span><br><span class="line">        Q[rear] = v;        <span class="comment">// 先赋值</span></span><br><span class="line">        rear = (rear + <span class="number">1</span>) % <span class="built_in">size</span>;   <span class="comment">// 后移动指针</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除，对循环队列来说是从队首删除</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isEmpty()) &#123;</span><br><span class="line">        <span class="comment">// 直接移动 front 即可</span></span><br><span class="line">        front = (front + <span class="number">1</span>) % <span class="built_in">size</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取队首</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getFront</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isEmpty()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> Q[front];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取队尾</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getRear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (isEmpty()) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> Q[(rear - <span class="number">1</span> + <span class="built_in">size</span>) % <span class="built_in">size</span>];</span><br><span class="line">    <span class="comment">// 插入完后队尾会 + 1，故实际队尾元素的 pos = (rear - 1) % size;</span></span><br><span class="line">    <span class="comment">// + size 是为了防止负数求模</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组实现循环双端队列"><a href="#数组实现循环双端队列" class="headerlink" title="数组实现循环双端队列"></a>数组实现循环双端队列</h2><p>跟上面一样，但多了两个新功能<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// extends Q</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 队首插入，队尾插入见上</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_front</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isFull()) &#123;</span><br><span class="line">        front = (front - <span class="number">1</span> + <span class="built_in">size</span>) % <span class="built_in">size</span>;  <span class="comment">// 先移动指针</span></span><br><span class="line">        Q[front] = v;  <span class="comment">// 再赋值</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 队尾删除，队首删除见上 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pop_back</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isEmpty()) &#123;</span><br><span class="line">        <span class="comment">// 直接移动 rear 即可</span></span><br><span class="line">        rear = (rear - <span class="number">1</span> + <span class="built_in">size</span>) % <span class="built_in">size</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 字典树</span><br><span class="line">```c++</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Trie* children[<span class="number">26</span>] = &#123; <span class="literal">nullptr</span> &#125;;</span><br><span class="line">    <span class="keyword">bool</span> is_end = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Trie() &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> &amp;<span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> *curr = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : <span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!curr-&gt;children[w - <span class="string">'a'</span>]) &#123;</span><br><span class="line">                curr-&gt;children[w - <span class="string">'a'</span>] = <span class="keyword">new</span> Trie();</span><br><span class="line">            &#125;</span><br><span class="line">            curr = curr-&gt;children[w - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        curr-&gt;is_end = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> p[N]; <span class="comment">// 父节点</span></span><br><span class="line"><span class="keyword">int</span> sizes[N]; <span class="comment">// 节点数</span></span><br><span class="line"><span class="keyword">int</span> d[N]; <span class="comment">// 节点到父节点的距离</span></span><br><span class="line"><span class="keyword">int</span> ranks[N]; <span class="comment">// 秩</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= N; ++i) &#123;</span><br><span class="line">        p[i] = i;</span><br><span class="line">        sizes[i] = <span class="number">1</span>;</span><br><span class="line">        d[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路径压缩</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p[a] != a) &#123;</span><br><span class="line">        p[a] = <span class="built_in">find</span>(p[a]);  <span class="comment">// 更新父节点</span></span><br><span class="line">        d[a] += d[p[a]]; <span class="comment">// 更新距离</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p[a];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并集合</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pa = <span class="built_in">find</span>(a), pb = <span class="built_in">find</span>(b);</span><br><span class="line">    <span class="keyword">if</span> (pa != pb) &#123;</span><br><span class="line">        <span class="comment">// 根据实际情况判断 pa 指向 pb 还是 pb 指向 pa</span></span><br><span class="line">        p[pa] = pb;</span><br><span class="line">        d[pa] = sizes[pb];    <span class="comment">// 更新距离</span></span><br><span class="line">        sizes[pb] += sizes[pa]; <span class="comment">// 更新节点数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启发式合并</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeByRank</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">int</span> pa = <span class="built_in">find</span>(a), pb = <span class="built_in">find</span>(b);</span><br><span class="line">    <span class="comment">// 秩小的树合并到秩大的树</span></span><br><span class="line">    <span class="keyword">if</span> (ranks[pa] &gt; ranks[pb]) &#123;</span><br><span class="line">        p[pb] = pa;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ranks[pb] &lt; ranks[pa]) &#123;</span><br><span class="line">        p[pa] = pb;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 秩相同时看实际情况合并，比如按节点大小合并</span></span><br><span class="line">        p[pa] = pb;</span><br><span class="line">        sizes[pb] += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启发式合并作用其实不大，而且在考虑父子节点关系的时候不能和路径压缩连用<br><del>所以说最好还是不用启发式合并</del></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/leetcode-getKth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/25/leetcode-getKth/" class="post-title-link" itemprop="url">leetcode 题目</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-25 00:07:58" itemprop="dateCreated datePublished" datetime="2020-05-25T00:07:58+08:00">2020-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-17 00:30:12" itemprop="dateModified" datetime="2020-07-17T00:30:12+08:00">2020-07-17</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="leetcode-题目集"><a href="#leetcode-题目集" class="headerlink" title="leetcode 题目集"></a>leetcode 题目集</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/25/leetcode-getKth/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/acwing-graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/13/acwing-graph/" class="post-title-link" itemprop="url">acwing 图论</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-13 23:27:45" itemprop="dateCreated datePublished" datetime="2020-05-13T23:27:45+08:00">2020-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-14 10:45:05" itemprop="dateModified" datetime="2020-09-14T10:45:05+08:00">2020-09-14</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>对 0….n-1 共 $n$ 个点组成的图，一共有 $m$ 条边</p>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>邻接矩阵：<br><code>vector&lt;vector&lt;int&gt;&gt; graph(n, vector&lt;int&gt;(n, 0))</code><br><code>graph[a][b]</code>：a -&gt; b 的权值</p>
+<p>不能开太大，比如 N = 1e4：</p>
+<script type="math/tex; mode=display">1e4 * 1e4 * sizeof(int) = 381MB</script><p>无权值存储：<br><code>vector&lt;int&gt; graph[N]</code></p>
+<p>邻接表： PII : pair<int,int><br><code>unordered_map&lt;int, list&lt;&lt;PII&gt;&gt; &gt; graph</code><br><code>graph[a]</code>： 与 a 连接的所有点<br><code>graph[a][i].first</code>：a 与 b 连接<br><code>graph[a][i].second</code>：a -&gt; b 的权值</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/13/acwing-graph/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/acwing-math/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/13/acwing-math/" class="post-title-link" itemprop="url">acwing数学知识</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-13 23:03:28" itemprop="dateCreated datePublished" datetime="2020-05-13T23:03:28+08:00">2020-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-03 17:36:22" itemprop="dateModified" datetime="2020-09-03T17:36:22+08:00">2020-09-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/13/acwing-math/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -462,7 +922,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -528,7 +988,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -571,7 +1031,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -609,7 +1069,7 @@
 <script src="/js/schemes/pisces.js"></script>
 
 
-<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="/js/next-boot.js"></script>
 
 
 
@@ -633,6 +1093,53 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
 
   
 

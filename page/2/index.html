@@ -153,7 +153,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/17/acwing-basic-datastruct/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/06/design-mode-builder/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -167,7 +167,69 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/07/17/acwing-basic-datastruct/" class="post-title-link" itemprop="url">acwing常用数据结构</a>
+            <a href="/2021/02/06/design-mode-builder/" class="post-title-link" itemprop="url">design-mode-builder</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-06 22:03:01 / 修改时间：23:20:34" itemprop="dateCreated datePublished" datetime="2021-02-06T22:03:01+08:00">2021-02-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h1><p>类有很多参数，有的是必须的，在写构造函数的时候会很麻烦</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>Director 为静态内部类 Builder，这样写是为了写成链式调用赋值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Student</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 必选</span></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Boolean sex;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 可选</span></span><br><span class="line">    <span class="keyword">private</span> Integer height;</span><br><span class="line">    <span class="keyword">private</span> Integer weight;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> Student student;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(Integer age, String name, Boolean sex)</span> </span>&#123;</span><br><span class="line">            student = <span class="keyword">new</span> Student();</span><br><span class="line">            student.age = age;</span><br><span class="line">            student.name = name;</span><br><span class="line">            student.sex = sex;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">setHeight</span><span class="params">(Integer height)</span> </span>&#123;</span><br><span class="line">            student.setHeight(height);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">setWeight</span><span class="params">(Integer weight)</span> </span>&#123;</span><br><span class="line">            student.setWeight(weight);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Student <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> student;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHeight</span><span class="params">(Integer height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWeight</span><span class="params">(Integer weight)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.weight = weight;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>kotlin 不需要建造者模式，因为 kotlin 有默认参数<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>(</span><br><span class="line">    <span class="keyword">val</span> age: <span class="built_in">Int</span>,</span><br><span class="line">    <span class="keyword">val</span> name: String,</span><br><span class="line">    <span class="keyword">val</span> sex: <span class="built_in">Boolean</span>,</span><br><span class="line">    <span class="keyword">val</span> height: <span class="built_in">Int</span> = <span class="number">0</span>,</span><br><span class="line">    <span class="keyword">val</span> weight: <span class="built_in">Int</span>? = <span class="literal">null</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/05/design-mode-prototype/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/05/design-mode-prototype/" class="post-title-link" itemprop="url">design-mode-prototype</a>
         </h1>
 
         <div class="post-meta">
@@ -177,14 +239,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-07-17 00:01:43" itemprop="dateCreated datePublished" datetime="2020-07-17T00:01:43+08:00">2020-07-17</time>
+              <time title="创建时间：2021-02-05 21:54:56" itemprop="dateCreated datePublished" datetime="2021-02-05T21:54:56+08:00">2021-02-05</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-15 13:38:12" itemprop="dateModified" datetime="2020-09-15T13:38:12+08:00">2020-09-15</time>
+                <time title="修改时间：2021-02-06 22:02:10" itemprop="dateModified" datetime="2021-02-06T22:02:10+08:00">2021-02-06</time>
               </span>
 
           
@@ -198,15 +260,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="单调栈"><a href="#单调栈" class="headerlink" title="单调栈"></a>单调栈</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!s.empty() &amp;&amp; check(s.top(), x)) s.pop();</span><br><span class="line">    <span class="comment">// 栈顶是最大值</span></span><br><span class="line">    s.push(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
-<li>最长上坡 (lc 962)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">若有：j &gt; i &amp;&amp; A[j] &gt;&#x3D; A[i]</span><br><span class="line">求 max(len(i, j))</span><br></pre></td></tr></table></figure>
-</li>
+          <h1 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h1><p>原型模式要求对象实现一个可以克隆自身的接口(类型)。这样一来，通过原型实例创建新的对象，就不需要关心这个实例本身的类型，只需要实现克隆自身的方法，也而无需再去通过new来创建。</p>
+<h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>参考  <a href="https://juejin.cn/post/6844903806577164302#heading-9" target="_blank" rel="noopener">Java深拷贝和浅拷贝</a></p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重写 Cloneable 接口的 clone()</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Prototype</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置成 data class 即可使用 copy()</span></span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Prototype</span></span>()</span><br></pre></td></tr></table></figure>
+<h3 id="浅拷贝的浅"><a href="#浅拷贝的浅" class="headerlink" title="浅拷贝的浅"></a>浅拷贝的浅</h3><p>如果属性是基本类型，拷贝的就是基本类型的值<br>如果属性是内存地址（引用类型），拷贝的就是内存地址</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span></span>(<span class="keyword">var</span> name: String)</span><br><span class="line"></span><br><span class="line"><span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>(</span><br><span class="line">    <span class="keyword">var</span> name: String,</span><br><span class="line">    <span class="keyword">var</span> age: <span class="built_in">Int</span>,</span><br><span class="line">    <span class="keyword">var</span> subject: Subject</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> student1 = Student(<span class="string">"john"</span>, <span class="number">18</span>, Subject(<span class="string">"math"</span>))   </span><br><span class="line">    <span class="keyword">val</span> student2 = student1.copy()</span><br><span class="line"></span><br><span class="line">    student2.name = <span class="string">"alice"</span>                 <span class="comment">// 1</span></span><br><span class="line">    student2.age = <span class="number">20</span>                       <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line">    student2.subject = Subject(<span class="string">"english"</span>)   <span class="comment">// 3</span></span><br><span class="line">    student2.subject.name = <span class="string">"chinese"</span>       <span class="comment">// 4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>String 为 final，故只会修改引用指针，<code>student2.name</code> 指向新的地址 <code>&quot;alice&quot;</code></li>
+<li>Integer 是基本类型，会拷贝出新的地址，<code>student2.age</code> 指向新的地址 <code>20</code></li>
+<li><code>student2.subject</code> 指针指向新的地址 <code>Subject(&quot;english&quot;)</code></li>
+<li><code>student2.subject.name</code> 修改了指向，但 <code>student2.subject</code> 指向的地址不变，和 <code>student1.subject</code> 指向同一份地址，故两者的 <code>subject</code> 都变了</li>
 </ol>
-<h2 id="单调队列（滑动窗口）"><a href="#单调队列（滑动窗口）" class="headerlink" title="单调队列（滑动窗口）"></a>单调队列（滑动窗口）</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; dq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> &amp;x : <span class="built_in">array</span>) &#123;</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_1( dq.front() ) ) dq.pop_front();</span><br><span class="line">    <span class="keyword">while</span> (!dq.empty() &amp;&amp; check_2( dq.<span class="built_in">end</span>() , x) ) dq.pop_back();</span><br><span class="line">    <span class="comment">// 队首是最大值</span></span><br><span class="line">    dq.push_back(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 判断是否收缩窗口，一般是窗口大小受限</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check_2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 单调条件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="字典树"><a href="#字典树" class="headerlink" title="字典树"></a>字典树</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Trie* children[<span class="number">26</span>] = &#123; <span class="literal">nullptr</span> &#125;;</span><br><span class="line">    <span class="keyword">bool</span> is_end = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Trie() &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> &amp;<span class="keyword">word</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> *curr = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;w : <span class="keyword">word</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!curr-&gt;children[w - <span class="string">'a'</span>]) &#123;</span><br><span class="line">                curr-&gt;children[w - <span class="string">'a'</span>] = <span class="keyword">new</span> Trie();</span><br><span class="line">            &#125;</span><br><span class="line">            curr = curr-&gt;children[w - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        curr-&gt;is_end = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> p[N]; <span class="comment">// 父节点</span></span><br><span class="line"><span class="keyword">int</span> sizes[N]; <span class="comment">// 节点数</span></span><br><span class="line"><span class="keyword">int</span> d[N]; <span class="comment">// 节点到父节点的距离</span></span><br><span class="line"><span class="keyword">int</span> ranks[N]; <span class="comment">// 秩</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= N; ++i) &#123;</span><br><span class="line">        p[i] = i;</span><br><span class="line">        sizes[i] = <span class="number">1</span>;</span><br><span class="line">        d[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路径压缩</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p[a] != a) &#123;</span><br><span class="line">        p[a] = <span class="built_in">find</span>(p[a]);  <span class="comment">// 更新父节点</span></span><br><span class="line">        d[a] += d[p[a]]; <span class="comment">// 更新距离</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p[a];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并集合</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> pa = <span class="built_in">find</span>(a), pb = <span class="built_in">find</span>(b);</span><br><span class="line">    <span class="keyword">if</span> (pa != pb) &#123;</span><br><span class="line">        <span class="comment">// 根据实际情况判断 pa 指向 pb 还是 pb 指向 pa</span></span><br><span class="line">        p[pa] = pb;</span><br><span class="line">        d[pa] = sizes[pb];    <span class="comment">// 更新距离</span></span><br><span class="line">        sizes[pb] += sizes[pa]; <span class="comment">// 更新节点数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 启发式合并</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeByRank</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">int</span> pa = <span class="built_in">find</span>(a), pb = <span class="built_in">find</span>(b);</span><br><span class="line">    <span class="comment">// 秩小的树合并到秩大的树</span></span><br><span class="line">    <span class="keyword">if</span> (ranks[pa] &gt; ranks[pb]) &#123;</span><br><span class="line">        p[pb] = pa;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ranks[pb] &lt; ranks[pa]) &#123;</span><br><span class="line">        p[pa] = pb;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 秩相同时看实际情况合并，比如按节点大小合并</span></span><br><span class="line">        p[pa] = pb;</span><br><span class="line">        sizes[pb] += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>启发式合并作用其实不大，而且在考虑父子节点关系的时候不能和路径压缩连用<br><del>所以说最好还是不用启发式合并</del></p>
+<p>第四点为浅拷贝的浅</p>
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>深拷贝会拷贝所有的属性，并拷贝属性指向的动态分配的内存</p>
+<h3 id="手动深拷贝"><a href="#手动深拷贝" class="headerlink" title="手动深拷贝"></a>手动深拷贝</h3><p>对象简单时直接对每个参数 new 一遍即可，对象复杂时使用 DFS 进行深拷贝</p>
+<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>将整个对象图写入到一个持久化存储文件中并且当需要的时候把它读取回来，前提是必须确保对象图中所有类都是可序列化的。  </p>
+<p>序列化大多数是为了将对象转换成易于传输的形式  </p>
+<p>序列化方法：<br><figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Java: Serializable</span><br><span class="line">Android: Parcelable</span><br><span class="line">其他：XML / JSON / Protobuf</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -226,7 +297,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/25/leetcode-getKth/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/03/design-mode-singleton/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -240,7 +311,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/25/leetcode-getKth/" class="post-title-link" itemprop="url">leetcode 题目</a>
+            <a href="/2021/02/03/design-mode-singleton/" class="post-title-link" itemprop="url">design-mode-singleton</a>
         </h1>
 
         <div class="post-meta">
@@ -250,14 +321,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-05-25 00:07:58" itemprop="dateCreated datePublished" datetime="2020-05-25T00:07:58+08:00">2020-05-25</time>
+              <time title="创建时间：2021-02-03 22:19:55" itemprop="dateCreated datePublished" datetime="2021-02-03T22:19:55+08:00">2021-02-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-17 00:30:12" itemprop="dateModified" datetime="2020-07-17T00:30:12+08:00">2020-07-17</time>
+                <time title="修改时间：2021-02-05 10:57:21" itemprop="dateModified" datetime="2021-02-05T10:57:21+08:00">2021-02-05</time>
               </span>
 
           
@@ -271,10 +342,91 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="leetcode-题目集"><a href="#leetcode-题目集" class="headerlink" title="leetcode 题目集"></a>leetcode 题目集</h1>
+          <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>确保一个类有且只有一个实例，并提供一个全局访问点。</p>
+<p>在开发中，很多时候有一些对象其实我们只需要一个，例如：线程池（threadpool）、缓存（cache）、默认设置、注册表（registry）、日志对象等等，这个时候把它设计为单例模式是最好的选择。</p>
+<h2 id="饿汉型"><a href="#饿汉型" class="headerlink" title="饿汉型"></a>饿汉型</h2><p>初始化即装载单例，由于放在静态区内，100%线程安全<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 变种写法</span></span><br><span class="line"><span class="comment">//    static &#123;</span></span><br><span class="line"><span class="comment">//        instance = new Singleton();</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态全局对象</span></span><br><span class="line"><span class="keyword">object</span> Singleton</span><br></pre></td></tr></table></figure>
+<h2 id="懒汉型（线程不安全）"><a href="#懒汉型（线程不安全）" class="headerlink" title="懒汉型（线程不安全）"></a>懒汉型（线程不安全）</h2><p>使用时才装载单例（延迟加载）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> instance: Singleton <span class="keyword">by</span> lazy(mode = LazyThreadSafetyMode.NONE) &#123; Singleton() &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="懒汉型（线程安全）"><a href="#懒汉型（线程安全）" class="headerlink" title="懒汉型（线程安全）"></a>懒汉型（线程安全）</h2><p>将整个函数加锁<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">lateinit</span> <span class="keyword">var</span> INSTANCE: Singleton</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Synchronized</span></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">getInstance</span><span class="params">()</span></span>: Singleton &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">this</span>::INSTANCE.isInitialized) &#123;</span><br><span class="line">                INSTANCE = Singleton()</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> INSTANCE</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="懒汉型（双重校验锁式，线程安全）"><a href="#懒汉型（双重校验锁式，线程安全）" class="headerlink" title="懒汉型（双重校验锁式，线程安全）"></a>懒汉型（双重校验锁式，线程安全）</h2><p>大多数情况下，单例已经生成了，但整个函数是加锁的，意味着即使已经生成了单例但在获取的时候还是加了锁，应对此进行优化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// volatile 指令重排</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    System.out.println(<span class="string">"init"</span>);</span><br><span class="line">                    instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="comment">// volatile 不能修饰不可变量 val， val 没有指令重排问题</span></span><br><span class="line">        <span class="keyword">val</span> instance: Singleton <span class="keyword">by</span> lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) &#123; Singleton() &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="静态内部类单例"><a href="#静态内部类单例" class="headerlink" title="静态内部类单例"></a>静态内部类单例</h2><p><a href="https://blog.csdn.net/xiaojin21cen/article/details/104532199" target="_blank" rel="noopener">单例模式（Singleton Pattern）之静态内部类</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonHolder</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SingletonHolder.instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> <span class="keyword">private</span> <span class="keyword">constructor</span></span>() &#123;</span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> instance = SingletonHolder.INSTANCE</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">object</span> SingletonHolder &#123;</span><br><span class="line">        <span class="keyword">val</span> INSTANCE = Singleton()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="枚举单例"><a href="#枚举单例" class="headerlink" title="枚举单例"></a>枚举单例</h2><p><a href="https://cloud.tencent.com/developer/article/1497592" target="_blank" rel="noopener">Java单例模式的7种写法中，为何用Enum枚举实现被认为是最好的方式？</a></p>
+<p>枚举类本身就是一种单例，只需要将单例类改成枚举类即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> Singleton &#123;</span><br><span class="line">    INSTANCE();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 线程安全，只会调用一次</span></span><br><span class="line">    Singleton() &#123;</span><br><span class="line">        System.out.println(<span class="string">"init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自己的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"i am instance"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main 中调用</span></span><br><span class="line">    Singleton.INSTANCE.test();  <span class="comment">// i am instance</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 线程安全，只会调用一次</span></span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        println(<span class="string">"init"</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自己的方法</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">test</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(<span class="string">"i am instance"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main 中调用</span></span><br><span class="line">    Singleton.INSTANCE.test();  <span class="comment">// i am instance</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/02/design-mode-factory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/02/design-mode-factory/" class="post-title-link" itemprop="url">design-mode-factory</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-02 23:15:10" itemprop="dateCreated datePublished" datetime="2021-02-02T23:15:10+08:00">2021-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-03 22:16:54" itemprop="dateModified" datetime="2021-02-03T22:16:54+08:00">2021-02-03</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>客户端需要某个对象时，通过一个工厂去实例化，而无需关心这个类的底层（依赖了其他类，或者其他复杂结构）</p>
+<h2 id="例子：计算器运算符"><a href="#例子：计算器运算符" class="headerlink" title="例子：计算器运算符"></a>例子：计算器运算符</h2><p>运算符作用一般为：将2个数经过运算获得一个结果<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Operation</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">getResult</span><span class="params">()</span></span>: <span class="built_in">Double</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PlusOperation</span> : <span class="type">Operation</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getResult</span><span class="params">()</span></span>: <span class="built_in">Double</span> = a + b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinusOperation</span> : <span class="type">Operation</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getResult</span><span class="params">()</span></span>: <span class="built_in">Double</span> = a - b</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TimesOperation</span> : <span class="type">Operation</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getResult</span><span class="params">()</span></span>: <span class="built_in">Double</span> = a * b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/05/25/leetcode-getKth/#more" rel="contents">
+              <a class="btn" href="/2021/02/02/design-mode-factory/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -298,7 +450,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/acwing-graph/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/02/design-mode-oop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -312,227 +464,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/13/acwing-graph/" class="post-title-link" itemprop="url">acwing 图论</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-13 23:27:45" itemprop="dateCreated datePublished" datetime="2020-05-13T23:27:45+08:00">2020-05-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-14 10:45:05" itemprop="dateModified" datetime="2020-09-14T10:45:05+08:00">2020-09-14</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>对 0….n-1 共 $n$ 个点组成的图，一共有 $m$ 条边</p>
-<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><p>邻接矩阵：<br><code>vector&lt;vector&lt;int&gt;&gt; graph(n, vector&lt;int&gt;(n, 0))</code><br><code>graph[a][b]</code>：a -&gt; b 的权值</p>
-<p>不能开太大，比如 N = 1e4：</p>
-<script type="math/tex; mode=display">1e4 * 1e4 * sizeof(int) = 381MB</script><p>无权值存储：<br><code>vector&lt;int&gt; graph[N]</code></p>
-<p>邻接表： PII : pair<int,int><br><code>unordered_map&lt;int, list&lt;&lt;PII&gt;&gt; &gt; graph</code><br><code>graph[a]</code>： 与 a 连接的所有点<br><code>graph[a][i].first</code>：a 与 b 连接<br><code>graph[a][i].second</code>：a -&gt; b 的权值</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/13/acwing-graph/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/acwing-math/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/13/acwing-math/" class="post-title-link" itemprop="url">acwing数学知识</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-13 23:03:28" itemprop="dateCreated datePublished" datetime="2020-05-13T23:03:28+08:00">2020-05-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-03 17:36:22" itemprop="dateModified" datetime="2020-09-03T17:36:22+08:00">2020-09-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/13/acwing-math/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/11/acwing-basic-algorithm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/11/acwing-basic-algorithm/" class="post-title-link" itemprop="url">AcWing基础算法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-11 22:45:27" itemprop="dateCreated datePublished" datetime="2020-05-11T22:45:27+08:00">2020-05-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-17 23:27:56" itemprop="dateModified" datetime="2020-09-17T23:27:56+08:00">2020-09-17</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="基础算法"><a href="#基础算法" class="headerlink" title="基础算法"></a>基础算法</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/11/acwing-basic-algorithm/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/05/bili-report/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/05/bili-report/" class="post-title-link" itemprop="url">b站点评爬虫</a>
+            <a href="/2021/02/02/design-mode-oop/" class="post-title-link" itemprop="url">design-mode-oop</a>
         </h1>
 
         <div class="post-meta">
@@ -543,18 +475,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-05 01:12:15 / 修改时间：01:39:01" itemprop="dateCreated datePublished" datetime="2020-04-05T01:12:15+08:00">2020-04-05</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">后端</span>
-                  </a>
-                </span>
+              <time title="创建时间：2021-02-02 22:38:08 / 修改时间：23:15:38" itemprop="dateCreated datePublished" datetime="2021-02-02T22:38:08+08:00">2021-02-02</time>
             </span>
 
           
@@ -568,12 +489,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a href="https://github.com/n7w/bili_report" target="_blank" rel="noopener">https://github.com/n7w/bili_report</a><br><del>无exe</del></p>
-<h2 id="爬虫数据结构"><a href="#爬虫数据结构" class="headerlink" title="爬虫数据结构"></a>爬虫数据结构</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"list"</span>: <span class="string">"20个数据"</span>,</span><br><span class="line">    <span class="attr">"total"</span>: <span class="string">"总数"</span>,</span><br><span class="line">    <span class="attr">"next"</span>: <span class="string">"下一页的cursor"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可见b站数据是以这种链表形式存储的<br>
+          <h1 id="面向对象编程原则"><a href="#面向对象编程原则" class="headerlink" title="面向对象编程原则"></a>面向对象编程原则</h1><p>支持可维护性复用，一方面需要实现设计方案或代码的复用，另一方面要保证系统易于扩展和修改，具有良好的可维护性。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/05/bili-report/#more" rel="contents">
+              <a class="btn" href="/2021/02/02/design-mode-oop/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -597,7 +516,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/07/paixu/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/04/ACautomation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -611,177 +530,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/07/paixu/" class="post-title-link" itemprop="url">常用排序</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-07 23:00:18" itemprop="dateCreated datePublished" datetime="2020-03-07T23:00:18+08:00">2020-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-17 23:34:54" itemprop="dateModified" datetime="2020-09-17T23:34:54+08:00">2020-09-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>两层遍历，每一轮遍历比较元素大小并进行交换<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/07/paixu/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/29/linklisted/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/29/linklisted/" class="post-title-link" itemprop="url">链表</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-29 21:11:40" itemprop="dateCreated datePublished" datetime="2020-02-29T21:11:40+08:00">2020-02-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-01 01:29:34" itemprop="dateModified" datetime="2020-03-01T01:29:34+08:00">2020-03-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="指针指向"><a href="#指针指向" class="headerlink" title="指针指向"></a>指针指向</h2><p>对一个链表 <code>ListNode *head</code></p>
-<script type="math/tex; mode=display">
-A-->B-->C-->D</script><p>令 <code>ListNode *next = head-&gt;next</code><br>显然 <code>*next</code> 为</p>
-<script type="math/tex; mode=display">
-B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</code>，则<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/29/linklisted/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/ajax/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/24/ajax/" class="post-title-link" itemprop="url">ajax</a>
+            <a href="/2020/11/04/ACautomation/" class="post-title-link" itemprop="url">AC自动机</a>
         </h1>
 
         <div class="post-meta">
@@ -792,18 +541,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:16:16 / 修改时间：10:31:53" itemprop="dateCreated datePublished" datetime="2020-02-24T10:16:16+08:00">2020-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
+              <time title="创建时间：2020-11-04 16:35:59 / 修改时间：16:36:51" itemprop="dateCreated datePublished" datetime="2020-11-04T16:35:59+08:00">2020-11-04</time>
             </span>
 
           
@@ -817,10 +555,69 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h2><p>同步：按顺序请求每个过程，得到响应后再继续下一个请求<br>异步：进程不需要等待，请求先发出，得到响应后再通知进程进行处理  </p>
+          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Child_Number = <span class="number">128</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 匹配时为   node-&gt;child[i] != nullptr ?</span></span><br><span class="line"><span class="comment"> * 成功时     node = node-&gt;child[i]</span></span><br><span class="line"><span class="comment"> * 失败时     node = node-&gt;fail</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">    <span class="built_in">string</span> str;</span><br><span class="line">    Node *child[Child_Number];</span><br><span class="line">    Node *fail;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isWord</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !str.empty();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AcAutomation</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    AcAutomation() = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">    AcAutomation(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;v) &#123;</span><br><span class="line">        root = <span class="keyword">new</span> Node();</span><br><span class="line">        <span class="comment">// 先建立字典树</span></span><br><span class="line">        buildTrie(v);</span><br><span class="line">        <span class="comment">// 后设置 fail 指针</span></span><br><span class="line">        setFail();</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"constructed"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">query</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Node *root;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * bfs 设置 fail 指针</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setFail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">queue</span>&lt;Node *&gt; q;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第一个字符的失配指针应为 root</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;n : root-&gt;child) &#123;</span><br><span class="line">            <span class="keyword">if</span> (n) &#123;</span><br><span class="line">                n-&gt;fail = root;</span><br><span class="line">                q.push(n);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从第一个字符开始</span></span><br><span class="line">        <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">            <span class="keyword">auto</span> p = q.front();     <span class="comment">// 父节点</span></span><br><span class="line">            q.pop();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; Child_Number; ++i) &#123;</span><br><span class="line">                <span class="keyword">auto</span> u = p-&gt;child[i];  <span class="comment">// 当前节点</span></span><br><span class="line">                <span class="keyword">if</span> (u) &#123;</span><br><span class="line">                    q.push(u);</span><br><span class="line">                    <span class="keyword">auto</span> failTo = p-&gt;fail;      <span class="comment">// 从父节点的失配指针开始</span></span><br><span class="line">                    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (failTo == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                            u-&gt;fail = root;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (failTo-&gt;child[i]) &#123;</span><br><span class="line">                            u-&gt;fail = failTo-&gt;child[i];</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            failTo = failTo-&gt;fail;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 由多个字符串来建立字典树</span></span><br><span class="line"><span class="comment">     * @param v</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">buildTrie</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp;v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;s : v) trieInsert(s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 字典树插入一个字符串</span></span><br><span class="line"><span class="comment">     * @param s</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">trieInsert</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">        Node *curr = root;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;c : s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;child[c] == <span class="literal">nullptr</span>) curr-&gt;child[c] = <span class="keyword">new</span> Node();</span><br><span class="line">            curr = curr-&gt;child[c];</span><br><span class="line">        &#125;</span><br><span class="line">        curr-&gt;str = s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AcAutomation::query</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">auto</span> curr = root;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (i &lt; s.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="keyword">char</span> ch = s[i];</span><br><span class="line">        <span class="keyword">if</span> (curr-&gt;child[ch] != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            curr = curr-&gt;child[ch];</span><br><span class="line">            ++i;</span><br><span class="line">            <span class="comment">// 当前节点是完整字符串</span></span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;isWord()) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d %s\n"</span>, i, curr-&gt;str.c_str());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 当前节点的失配指针已经是完整字符串</span></span><br><span class="line">            <span class="keyword">if</span> (curr-&gt;fail &amp;&amp; curr-&gt;fail-&gt;isWord()) &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d %s\n"</span>, i, curr-&gt;fail-&gt;str.c_str());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 失配</span></span><br><span class="line">            curr = curr-&gt;fail;</span><br><span class="line">            <span class="keyword">if</span> (curr == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">                <span class="comment">// 重置状态机</span></span><br><span class="line">                curr = root;</span><br><span class="line">                ++i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/30/matrix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/30/matrix/" class="post-title-link" itemprop="url">matrix</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-30 10:21:38 / 修改时间：10:52:08" itemprop="dateCreated datePublished" datetime="2020-10-30T10:21:38+08:00">2020-10-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; pii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;pii&gt; vpii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;vpii&gt; matrix;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/24/ajax/#more" rel="contents">
+              <a class="btn" href="/2020/10/30/matrix/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -844,7 +641,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/24/laravel-route/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/13/kmp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -858,7 +655,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/24/laravel-route/" class="post-title-link" itemprop="url">Laravel 路由的隐式绑定</a>
+            <a href="/2020/10/13/kmp/" class="post-title-link" itemprop="url">kmp和状态机</a>
         </h1>
 
         <div class="post-meta">
@@ -869,18 +666,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-02-24 10:15:21 / 修改时间：10:32:26" itemprop="dateCreated datePublished" datetime="2020-02-24T10:15:21+08:00">2020-02-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">后端</span>
-                  </a>
-                </span>
+              <time title="创建时间：2020-10-13 17:15:47 / 修改时间：23:25:28" itemprop="dateCreated datePublished" datetime="2020-10-13T17:15:47+08:00">2020-10-13</time>
             </span>
 
           
@@ -894,11 +680,153 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h2><p>详情文档 <a href="https://learnku.com/docs/laravel/5.8/routing/3890#route-model-binding" target="_blank" rel="noopener">https://learnku.com/docs/laravel/5.8/routing/3890#route-model-binding</a></p>
-<p>Laravel 会自动解析定义在路由或控制器行为中与类型提示的变量名匹配的路由段名称的 Eloquent 模型。例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Route::get(<span class="string">'api/users/&#123;user&#125;'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(App\User $user)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> $user-&gt;email;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>
+          <h2 id="模式串的简易状态机"><a href="#模式串的简易状态机" class="headerlink" title="模式串的简易状态机"></a>模式串的简易状态机</h2><p>设状态机 <code>ne[i]</code> 为匹配到第<code>i</code>个字符时，如果匹配失败，则回退到第<code>ne[i]</code>个字符（<code>i</code>从<code>1</code>开始）</p>
+<p>初始 <code>ne[0] = -1</code><br>例：模式串 <code>p = &quot;ababac&quot;</code><br>获得的状态机为：<br><code>ne[] = {-1, 0, 0, 1, 2, 3, 0}</code>，如下图<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/02/24/laravel-route/#more" rel="contents">
+              <a class="btn" href="/2020/10/13/kmp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/19/binary-search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/19/binary-search/" class="post-title-link" itemprop="url">二分法</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-19 10:41:08" itemprop="dateCreated datePublished" datetime="2020-09-19T10:41:08+08:00">2020-09-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-22 00:32:30" itemprop="dateModified" datetime="2020-09-22T00:32:30+08:00">2020-09-22</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="acwing-模板"><a href="#acwing-模板" class="headerlink" title="acwing 模板"></a>acwing 模板</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">二分利用的不是有序性，而是可二分性</span><br><span class="line">    即对原数组 a[]，有 a[0.....l] 为一类，a[l + 1 ...... n - 1] 为另一类 </span><br><span class="line"></span><br><span class="line">二分法的关键：</span><br><span class="line">    确定分界函数 check()，二分时不断排除错误的区间（以 m 的位置为判断）</span><br></pre></td></tr></table></figure>
+<h2 id="数组内二分"><a href="#数组内二分" class="headerlink" title="数组内二分"></a>数组内二分</h2><h3 id="一般有序数组"><a href="#一般有序数组" class="headerlink" title="一般有序数组"></a>一般有序数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">704. 二分查找（简单）</span><br><span class="line">    可分为 &lt;&#x3D; target 或者 &gt;&#x3D; target</span><br><span class="line"></span><br><span class="line">34. 在排序数组中查找元素的第一个和最后一个位置（中等）</span><br><span class="line">    实现 lower_bound() 和 upper_bound()</span><br></pre></td></tr></table></figure>
+<h3 id="局部有序数组"><a href="#局部有序数组" class="headerlink" title="局部有序数组"></a>局部有序数组</h3><p>需要借助其他点来确定有序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">153. 寻找旋转排序数组中的最小值（中等）</span><br><span class="line">154. 寻找旋转排序数组中的最小值 II（中等）</span><br><span class="line">    </span><br><span class="line">    找到旋转数组中的分界点</span><br><span class="line">    参考点： a.front() 与 a.back()</span><br><span class="line"></span><br><span class="line">33. 搜索旋转排序数组（中等</span><br><span class="line">81. 搜索旋转排序数组 II（中等）</span><br><span class="line"></span><br><span class="line">    先找到分界点，再分析 target 在哪一边，然后在该区间进行普通二分</span><br><span class="line"></span><br><span class="line">852. 山脉数组的峰顶索引（简单）</span><br><span class="line">    0 1 2 1 0</span><br><span class="line">    升序区 a[i - 1] &lt; a[i]</span><br><span class="line">    降序区 a[i + 1] &lt; a[i]</span><br></pre></td></tr></table></figure></p>
+<h3 id="有限整数集二分"><a href="#有限整数集二分" class="headerlink" title="有限整数集二分"></a>有限整数集二分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">69. x 的平方根（简单）</span><br><span class="line">    [l, r] 区间内的二分查找</span><br></pre></td></tr></table></figure>
+<h3 id="困难二分题"><a href="#困难二分题" class="headerlink" title="困难二分题"></a>困难二分题</h3><p>寻找一个目标 <code>T</code>，使得数组中有 <code>k</code> 种数据都小于（或者大于）<code>T</code><br><code>check()</code> 一般复杂度为 $O(N)$，故整个算法的时间复杂度为 $O(N \log N)$<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">719. 找出第 k 小的距离对</span><br><span class="line">    二分+滑动窗口</span><br><span class="line"></span><br><span class="line">LCP 12. 小张刷题计划</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/07/LRU/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/07/LRU/" class="post-title-link" itemprop="url">LRU 和 LFU</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-07 20:33:02" itemprop="dateCreated datePublished" datetime="2020-09-07T20:33:02+08:00">2020-09-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-09 13:16:02" itemprop="dateModified" datetime="2020-09-09T13:16:02+08:00">2020-09-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Least-Recently-Used-LRU"><a href="#Least-Recently-Used-LRU" class="headerlink" title="Least Recently Used (LRU)"></a>Least Recently Used (LRU)</h1><p>最近最久使用算法<br>满足查询 $O(1)$，插入 $O(1)$，删除 $O(1)$<br>实现方式：<code>LinkedHashMap</code>，即双向链表 + 哈希表</p>
+<h1 id="Least-Frequently-Used-LFU"><a href="#Least-Frequently-Used-LFU" class="headerlink" title="Least Frequently Used (LFU)"></a>Least Frequently Used (LFU)</h1><p>最近最少使用算法<br>满足查询 $O(1)$，插入 $O(1)$，删除 $O(1)$<br>实现方式：<code>DLinkList&lt;DLinkList&gt;</code>，即以双向链表为节点的双向链表<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/07/LRU/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -922,7 +850,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -988,7 +916,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1031,7 +959,7 @@ B-->C-->D</script><p>若我们想以此实现交换<code>A</code>和<code>B</cod
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

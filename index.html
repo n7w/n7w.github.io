@@ -153,7 +153,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/30/matrix/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-observer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -167,7 +167,76 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/10/30/matrix/" class="post-title-link" itemprop="url">matrix</a>
+            <a href="/2021/02/07/design-mode-observer/" class="post-title-link" itemprop="url">design-mode-observer</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-07 21:33:26" itemprop="dateCreated datePublished" datetime="2021-02-07T21:33:26+08:00">2021-02-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-13 19:06:55" itemprop="dateModified" datetime="2021-02-13T19:06:55+08:00">2021-02-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><p>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">╭─────────────╮  Fire Event  ╭──────────────╮</span><br><span class="line">│             │─────────────&gt;│              │</span><br><span class="line">│   Subject   │              │   Observer   │</span><br><span class="line">│             │&lt;─────────────│              │</span><br><span class="line">╰─────────────╯  Subscribe   ╰──────────────╯</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">exec</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">subscribe</span><span class="params">(subject: <span class="type">Subject</span>)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 被观察者</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">val</span> observers = ArrayList&lt;Observer&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">notifyObserver</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">addObserver</span><span class="params">(observer: <span class="type">Observer</span>)</span></span> = observers.add(observer)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserverA</span> : <span class="type">Observer &#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">exec</span><span class="params">()</span></span> = println(<span class="string">"A exec!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">subscribe</span><span class="params">(subject: <span class="type">Subject</span>)</span></span> &#123;</span><br><span class="line">        subject.addObserver(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteObserverB</span> : <span class="type">Observer &#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">exec</span><span class="params">()</span></span> = println(<span class="string">"B exec!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">subscribe</span><span class="params">(subject: <span class="type">Subject</span>)</span></span> &#123;</span><br><span class="line">        subject.addObserver(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteSubject</span> : <span class="type">Subject</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">notifyObserver</span><span class="params">()</span></span> = observers.forEach &#123; it.exec() &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> objA = ConcreteObserverA()</span><br><span class="line">    <span class="keyword">val</span> objB = ConcreteObserverB()</span><br><span class="line">    <span class="keyword">val</span> sub = ConcreteSubject()</span><br><span class="line"></span><br><span class="line">    objA.subscribe(sub)     <span class="comment">// A 要观察 sub</span></span><br><span class="line">    objB.subscribe(sub)     <span class="comment">// B 要观察 sub</span></span><br><span class="line"></span><br><span class="line">    sub.notifyObserver()    <span class="comment">// sub 发生变化，通知 A,B 发生了变化</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="发布订阅模式"><a href="#发布订阅模式" class="headerlink" title="发布订阅模式"></a>发布订阅模式</h2><p>为了解耦</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">╭─────────────╮                 ╭───────────────╮   Fire Event   ╭──────────────╮</span><br><span class="line">│             │  Publish Event  │               │───────────────&gt;│              │</span><br><span class="line">│  Publisher  │────────────────&gt;│ Event Channel │                │  Subscriber  │</span><br><span class="line">│             │                 │               │&lt;───────────────│              │</span><br><span class="line">╰─────────────╯                 ╰───────────────╯    Subscribe   ╰──────────────╯</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Subscriber</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">exec</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Publisher</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataHub</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> map = HashMap&lt;Publisher, LinkedList&lt;Subscriber&gt;&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">subscribe</span><span class="params">(publisher: <span class="type">Publisher</span>, subscriber: <span class="type">Subscriber</span>)</span></span> =</span><br><span class="line">        map.getOrPut(publisher) &#123; LinkedList() &#125;.add(subscriber)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">publish</span><span class="params">(publisher: <span class="type">Publisher</span>)</span></span> = map.getOrPut(publisher) &#123; LinkedList() &#125;.forEach &#123; it.exec() &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-template/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/07/design-mode-template/" class="post-title-link" itemprop="url">design-mode-template</a>
         </h1>
 
         <div class="post-meta">
@@ -178,7 +247,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-10-30 10:21:38 / 修改时间：10:52:08" itemprop="dateCreated datePublished" datetime="2020-10-30T10:21:38+08:00">2020-10-30</time>
+              <time title="创建时间：2021-02-07 21:27:52 / 修改时间：21:33:11" itemprop="dateCreated datePublished" datetime="2021-02-07T21:27:52+08:00">2021-02-07</time>
             </span>
 
           
@@ -192,15 +261,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; pii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;pii&gt; vpii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">vector</span>&lt;vpii&gt; matrix;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/30/matrix/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a>模板模式</h1><p>一些方法通用，却在每一个子类都重新写了这一方法。</p>
+<h2 id="例子：游戏流程"><a href="#例子：游戏流程" class="headerlink" title="例子：游戏流程"></a>例子：游戏流程</h2><p>所有游戏都是准备、开始、结束这三个步骤，只是不同游戏不同操作<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Game</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">startPlay</span><span class="params">()</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">endPlay</span><span class="params">()</span></span>;</span><br><span class="line"> </span><br><span class="line">   <span class="comment">//模板</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//初始化游戏</span></span><br><span class="line">      initialize();</span><br><span class="line"> </span><br><span class="line">      <span class="comment">//开始游戏</span></span><br><span class="line">      startPlay();</span><br><span class="line"> </span><br><span class="line">      <span class="comment">//结束游戏</span></span><br><span class="line">      endPlay();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Football</span> <span class="keyword">extends</span> <span class="title">Game</span> </span>&#123;&#125; <span class="comment">// 足球的实现</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Basketball</span> <span class="keyword">extends</span> <span class="title">Game</span> </span>&#123;&#125; <span class="comment">// 篮球的实现</span></span><br></pre></td></tr></table></figure></p>
+
       
     </div>
 
@@ -219,7 +282,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/13/kmp/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-strategy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -233,7 +296,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/10/13/kmp/" class="post-title-link" itemprop="url">kmp和状态机</a>
+            <a href="/2021/02/07/design-mode-strategy/" class="post-title-link" itemprop="url">design-mode-strategy</a>
         </h1>
 
         <div class="post-meta">
@@ -244,7 +307,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-10-13 17:15:47 / 修改时间：23:25:28" itemprop="dateCreated datePublished" datetime="2020-10-13T17:15:47+08:00">2020-10-13</time>
+              <time title="创建时间：2021-02-07 20:28:56 / 修改时间：21:26:42" itemprop="dateCreated datePublished" datetime="2021-02-07T20:28:56+08:00">2021-02-07</time>
             </span>
 
           
@@ -258,16 +321,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="模式串的简易状态机"><a href="#模式串的简易状态机" class="headerlink" title="模式串的简易状态机"></a>模式串的简易状态机</h2><p>设状态机 <code>ne[i]</code> 为匹配到第<code>i</code>个字符时，如果匹配失败，则回退到第<code>ne[i]</code>个字符（<code>i</code>从<code>1</code>开始）</p>
-<p>初始 <code>ne[0] = -1</code><br>例：模式串 <code>p = &quot;ababac&quot;</code><br>获得的状态机为：<br><code>ne[] = {-1, 0, 0, 1, 2, 3, 0}</code>，如下图<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/13/kmp/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><p>有一个方法，该方法对应多个策略去执行，可把该方法写为接口，不同策略按自己的写法去执行，然后用一个上下文去执行</p>
+<h2 id="例子：商品打折"><a href="#例子：商品打折" class="headerlink" title="例子：商品打折"></a>例子：商品打折</h2><p>商品打折策略：不打折、打折、满减</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">DiscountStrategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getDiscount</span><span class="params">(total: <span class="type">BigDecimal</span>)</span></span>: BigDecimal</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 会员打折</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserDiscountStrategy</span> : <span class="type">DiscountStrategy &#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getDiscount</span><span class="params">(total: <span class="type">BigDecimal</span>)</span></span>: BigDecimal =</span><br><span class="line">        total.multiply(BigDecimal(<span class="number">0.1</span>)).setScale(<span class="number">2</span>, RoundingMode.DOWN)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 满减</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OverDiscountStrategy</span> : <span class="type">DiscountStrategy &#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getDiscount</span><span class="params">(total: <span class="type">BigDecimal</span>)</span></span>: BigDecimal =</span><br><span class="line">        <span class="keyword">if</span> (total &gt;= BigDecimal(<span class="number">100</span>)) BigDecimal(<span class="number">20</span>) <span class="keyword">else</span> BigDecimal.ZERO</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上下文类，注入策略</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DiscountContext</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> discountStrategy: DiscountStrategy</span><br><span class="line">) &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getPrice</span><span class="params">(total: <span class="type">BigDecimal</span>)</span></span> = total.subtract(discountStrategy.getDiscount(total).setScale(<span class="number">2</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Client 调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> ctx = DiscountContext(UserDiscountStrategy())</span><br><span class="line">    println(ctx.getPrice(BigDecimal(<span class="number">110</span>)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="与简单工厂结合"><a href="#与简单工厂结合" class="headerlink" title="与简单工厂结合"></a>与简单工厂结合</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DiscountContext</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> strategyName: String) &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> strategy: DiscountStrategy = <span class="keyword">when</span> (strategyName) &#123;</span><br><span class="line">        <span class="string">"User"</span> -&gt; UserDiscountStrategy()</span><br><span class="line">        <span class="string">"Over"</span> -&gt; OverDiscountStrategy()</span><br><span class="line">        <span class="keyword">else</span> -&gt; <span class="keyword">throw</span> Exception()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getPrice</span><span class="params">(total: <span class="type">BigDecimal</span>)</span></span> = total.subtract(strategy.getDiscount(total).setScale(<span class="number">2</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Client 调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> ctx = DiscountContext(<span class="string">"User"</span>)</span><br><span class="line">    println(ctx.getPrice(BigDecimal(<span class="number">110</span>)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -286,7 +343,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/19/binary-search/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-flyweight/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -300,558 +357,7 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/19/binary-search/" class="post-title-link" itemprop="url">二分法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-19 10:41:08" itemprop="dateCreated datePublished" datetime="2020-09-19T10:41:08+08:00">2020-09-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-22 00:32:30" itemprop="dateModified" datetime="2020-09-22T00:32:30+08:00">2020-09-22</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="acwing-模板"><a href="#acwing-模板" class="headerlink" title="acwing 模板"></a>acwing 模板</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">二分利用的不是有序性，而是可二分性</span><br><span class="line">    即对原数组 a[]，有 a[0.....l] 为一类，a[l + 1 ...... n - 1] 为另一类 </span><br><span class="line"></span><br><span class="line">二分法的关键：</span><br><span class="line">    确定分界函数 check()，二分时不断排除错误的区间（以 m 的位置为判断）</span><br></pre></td></tr></table></figure>
-<h2 id="数组内二分"><a href="#数组内二分" class="headerlink" title="数组内二分"></a>数组内二分</h2><h3 id="一般有序数组"><a href="#一般有序数组" class="headerlink" title="一般有序数组"></a>一般有序数组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">704. 二分查找（简单）</span><br><span class="line">    可分为 &lt;&#x3D; target 或者 &gt;&#x3D; target</span><br><span class="line"></span><br><span class="line">34. 在排序数组中查找元素的第一个和最后一个位置（中等）</span><br><span class="line">    实现 lower_bound() 和 upper_bound()</span><br></pre></td></tr></table></figure>
-<h3 id="局部有序数组"><a href="#局部有序数组" class="headerlink" title="局部有序数组"></a>局部有序数组</h3><p>需要借助其他点来确定有序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">153. 寻找旋转排序数组中的最小值（中等）</span><br><span class="line">154. 寻找旋转排序数组中的最小值 II（中等）</span><br><span class="line">    </span><br><span class="line">    找到旋转数组中的分界点</span><br><span class="line">    参考点： a.front() 与 a.back()</span><br><span class="line"></span><br><span class="line">33. 搜索旋转排序数组（中等</span><br><span class="line">81. 搜索旋转排序数组 II（中等）</span><br><span class="line"></span><br><span class="line">    先找到分界点，再分析 target 在哪一边，然后在该区间进行普通二分</span><br><span class="line"></span><br><span class="line">852. 山脉数组的峰顶索引（简单）</span><br><span class="line">    0 1 2 1 0</span><br><span class="line">    升序区 a[i - 1] &lt; a[i]</span><br><span class="line">    降序区 a[i + 1] &lt; a[i]</span><br></pre></td></tr></table></figure></p>
-<h3 id="有限整数集二分"><a href="#有限整数集二分" class="headerlink" title="有限整数集二分"></a>有限整数集二分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">69. x 的平方根（简单）</span><br><span class="line">    [l, r] 区间内的二分查找</span><br></pre></td></tr></table></figure>
-<h3 id="困难二分题"><a href="#困难二分题" class="headerlink" title="困难二分题"></a>困难二分题</h3><p>寻找一个目标 <code>T</code>，使得数组中有 <code>k</code> 种数据都小于（或者大于）<code>T</code><br><code>check()</code> 一般复杂度为 $O(N)$，故整个算法的时间复杂度为 $O(N \log N)$<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">719. 找出第 k 小的距离对</span><br><span class="line">    二分+滑动窗口</span><br><span class="line"></span><br><span class="line">LCP 12. 小张刷题计划</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/07/LRU/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/07/LRU/" class="post-title-link" itemprop="url">LRU 和 LFU</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-07 20:33:02" itemprop="dateCreated datePublished" datetime="2020-09-07T20:33:02+08:00">2020-09-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-09 13:16:02" itemprop="dateModified" datetime="2020-09-09T13:16:02+08:00">2020-09-09</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Least-Recently-Used-LRU"><a href="#Least-Recently-Used-LRU" class="headerlink" title="Least Recently Used (LRU)"></a>Least Recently Used (LRU)</h1><p>最近最久使用算法<br>满足查询 $O(1)$，插入 $O(1)$，删除 $O(1)$<br>实现方式：<code>LinkedHashMap</code>，即双向链表 + 哈希表</p>
-<h1 id="Least-Frequently-Used-LFU"><a href="#Least-Frequently-Used-LFU" class="headerlink" title="Least Frequently Used (LFU)"></a>Least Frequently Used (LFU)</h1><p>最近最少使用算法<br>满足查询 $O(1)$，插入 $O(1)$，删除 $O(1)$<br>实现方式：<code>DLinkList&lt;DLinkList&gt;</code>，即以双向链表为节点的双向链表<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/09/07/LRU/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/06/binary-indexed-tree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/06/binary-indexed-tree/" class="post-title-link" itemprop="url">树状数组</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-06 19:10:36" itemprop="dateCreated datePublished" datetime="2020-09-06T19:10:36+08:00">2020-09-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-16 12:48:56" itemprop="dateModified" datetime="2020-09-16T12:48:56+08:00">2020-09-16</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h2><p>主要解决两个问题</p>
-<ol>
-<li>快速求前缀和</li>
-<li>快速修改一个元素</li>
-</ol>
-<h3 id="原数组"><a href="#原数组" class="headerlink" title="原数组"></a>原数组</h3><ol>
-<li>求前缀和 $O(N)$</li>
-<li>修改元素 $O(1)$</li>
-</ol>
-<h3 id="前缀和数组"><a href="#前缀和数组" class="headerlink" title="前缀和数组"></a>前缀和数组</h3><ol>
-<li>求前缀和 $O(1)$</li>
-<li>修改元素 $O(N)$</li>
-</ol>
-<h3 id="树状数组-1"><a href="#树状数组-1" class="headerlink" title="树状数组"></a>树状数组</h3><ol>
-<li>求前缀和 $O(\log N)$</li>
-<li>修改元素 $O(\log N)$</li>
-</ol>
-<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BIT</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> x &amp; -x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    BIT(<span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;n = n + <span class="number">5</span>;</span><br><span class="line">        tree.resize(<span class="keyword">this</span>-&gt;n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  单点修改    O(logN)</span></span><br><span class="line"><span class="comment">     *  原数组 a[i] += v</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; <span class="keyword">this</span>-&gt;n) &#123;</span><br><span class="line">            tree[i] += v;</span><br><span class="line">            i += lowbit(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  区间修改    O(logN)</span></span><br><span class="line"><span class="comment">     *  原数组 a[i, j] 都加上 v</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        update(i, v);</span><br><span class="line">        update(j, -v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  单点查询    O(logN)</span></span><br><span class="line"><span class="comment">     *  查询前缀和 S[i]</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        i = <span class="built_in">min</span>(i, n);</span><br><span class="line">        <span class="keyword">int</span> s = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (i) &#123;</span><br><span class="line">            s += tree[i];</span><br><span class="line">            i -= lowbit(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  区间查询    O(logN)</span></span><br><span class="line"><span class="comment">     *  查询前缀和 S[i, j]</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getSum</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getSum(j) - getSum(i - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/04/sql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/04/sql/" class="post-title-link" itemprop="url">sql</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-04 10:58:16" itemprop="dateCreated datePublished" datetime="2020-09-04T10:58:16+08:00">2020-09-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-05 21:10:59" itemprop="dateModified" datetime="2020-09-05T21:10:59+08:00">2020-09-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="SELECT-WHERE"><a href="#SELECT-WHERE" class="headerlink" title="SELECT WHERE"></a>SELECT WHERE</h2><ol>
-<li>name = ‘france’          </li>
-<li>name IN (‘a’, ‘b’, ‘c’)</li>
-<li>number BETWEEN 100 AND 200</li>
-<li>number &gt;= 1000</li>
-<li>a LIKE ‘%a’          — % 为任意匹配符，即匹配以 a 结尾</li>
-<li>a LIKE ‘a%’          — 以 a 开头</li>
-<li>a LIKE ‘%a%’         — 包含 a </li>
-<li>NOT / OR / AND / XOR</li>
-<li>比较符： <code>=</code>，<code>!=</code>，<code>&lt;&gt;</code>  </li>
-<li>IS NULL  — 空值</li>
-</ol>
-<h2 id="SELECT-字段"><a href="#SELECT-字段" class="headerlink" title="SELECT 字段"></a>SELECT 字段</h2><ol>
-<li>boolean，如 name in (‘John’)</li>
-<li>COUNT() SUM()</li>
-<li>CASE<br>WHEN a THEN 1<br>WHEN b THEN 2<br>……<br>ELSE 0<br>END — 多条件</li>
-<li>临时表，如 <code>Select a.b From (Select b From c) As a</code></li>
-</ol>
-<h2 id="ORDER-BY"><a href="#ORDER-BY" class="headerlink" title="ORDER BY"></a>ORDER BY</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">多条件排序：</span><br><span class="line">    Order By a, b, c</span><br><span class="line">    按 a 排序，a 相同时按 b 排序，b 相同时按 c 排序 .....</span><br><span class="line"></span><br><span class="line">默认升序 asc</span><br><span class="line">降序 desc</span><br></pre></td></tr></table></figure>
-<h2 id="SELECT-子查询"><a href="#SELECT-子查询" class="headerlink" title="SELECT 子查询"></a>SELECT 子查询</h2><p>嵌套 SELECT 实际上是多层 for 循环</p>
-<ol>
-<li>WHERE a &gt; (SELECT ….)</li>
-<li>SELECT t1.a / t2.b FROM t1, (SELECT b) AS t2</li>
-<li>x &gt;= ALL(SELECT * )  — ALL 是右值，保证 ALL 内没有 NULL</li>
-</ol>
-<h2 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h2><ol>
-<li>Sum</li>
-<li>Distinct</li>
-<li>Count   </li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Group By：</span><br><span class="line">    当聚合函数（如 SUM） 的目标字段有重复值时，需要再后面加上 Group By</span><br><span class="line">    </span><br><span class="line">    Group By a, b</span><br><span class="line">        先按 a 分组，相同时再按 b 分组</span><br><span class="line">        若单一变量无法彻底分组则需要多个变量</span><br><span class="line"></span><br><span class="line">Having：</span><br><span class="line">    Where 不能用聚合函数，想要使用聚合函数作为条件，需要用 Having </span><br><span class="line">        如：Group By ...  Having SUM(a) &#x3D; 100</span><br></pre></td></tr></table></figure>
-<h2 id="Join-On"><a href="#Join-On" class="headerlink" title="Join On"></a>Join On</h2><p>减少子查询<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">From t1 </span><br><span class="line">    Join t2 On t1.aid = t2.id </span><br><span class="line">    Join t3 On t1.bid = t3.id</span><br><span class="line"></span><br><span class="line">INNER JOIN</span><br><span class="line">LEFT JOIN</span><br><span class="line">RIGHT JOIN</span><br><span class="line">FULL JOIN</span><br><span class="line"></span><br><span class="line">自连接</span><br></pre></td></tr></table></figure></p>
-<h2 id="多条件-Select"><a href="#多条件-Select" class="headerlink" title="多条件 Select"></a>多条件 Select</h2><p>思考顺序：从里到外<br>因为条件优先级：从里到外</p>
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ol>
-<li>Coalesce(字段,替代值)    将空值转化为替代值</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/02/acwing-dp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/02/acwing-dp/" class="post-title-link" itemprop="url">acwing-dp</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-02 16:22:49" itemprop="dateCreated datePublished" datetime="2020-09-02T16:22:49+08:00">2020-09-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-11 15:27:17" itemprop="dateModified" datetime="2020-09-11T15:27:17+08:00">2020-09-11</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="DP模型"><a href="#DP模型" class="headerlink" title="DP模型"></a>DP模型</h1><p>分析方法：定义集合、属性、状态计算（找出获得当前 dp[i] 的上一步）</p>
-<h2 id="数字三角形模型"><a href="#数字三角形模型" class="headerlink" title="数字三角形模型"></a>数字三角形模型</h2><p>路径 dp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">基本问题：二维矩阵中，从左上角到右下角的最小代价  </span><br><span class="line">定义：dp[i][j] </span><br><span class="line">集合：从 (0,0) 到 (i, j) 的走法</span><br><span class="line">属性：Min</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：从左边的格子来、从上面的格子来</span><br><span class="line">    即 dp[i][j] &#x3D; A[i][j] + min(dp[i - 1][j], dp[i][j - 1])</span><br><span class="line">初始值：</span><br><span class="line">    dp[0][0] &#x3D; A[0][0]</span><br></pre></td></tr></table></figure>
-<p>类似题型：最长公共子序列（LCS）、编辑距离、最多不交叉连线问题</p>
-<h2 id="最长上升子序列模型（LIS）"><a href="#最长上升子序列模型（LIS）" class="headerlink" title="最长上升子序列模型（LIS）"></a>最长上升子序列模型（LIS）</h2><p>序列 dp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">基本问题：一维数组中，求出最长的一组上升子序列的长度</span><br><span class="line">定义：dp[i]</span><br><span class="line">集合：以 A[i] 为结尾的上升子序列</span><br><span class="line">属性：Max</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：j &lt; i 中，满足 A[j] &lt; A[i]（上升条件）即可</span><br><span class="line">    即 dp[i] &#x3D; max(dp[0......j])</span><br><span class="line">初始值：</span><br><span class="line">    dp[i] &#x3D; 1 （自身就是一个上升子序列）</span><br></pre></td></tr></table></figure>
-<p>类似题型：最长下降子序列、俄罗斯套娃问题</p>
-<h2 id="背包模型"><a href="#背包模型" class="headerlink" title="背包模型"></a>背包模型</h2><p>有限制选择 dp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">基本问题：N 个物品中，每个物品最多可以选 s 次，求选择完后总体积不超过 V 的最大价值</span><br><span class="line">定义：dp[i][j] </span><br><span class="line">集合：前 i 个物品中，总体积不超过 j 的选法</span><br><span class="line">属性：Max</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：选完前 i - 1 个物品，第 i 个物品选 0 - s 次</span><br><span class="line">初始状态：</span><br><span class="line">    如果问题是 “总体积正好为 V ” ，则：</span><br><span class="line">        memset(dp, INF, sizeof(dp))</span><br><span class="line">    否则：</span><br><span class="line">        memset(dp, 0, sizeof(dp))</span><br><span class="line">    但初始值 dp[0][0] &#x3D; 0</span><br></pre></td></tr></table></figure>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> v[N], w[N], s[N]; </span><br><span class="line"><span class="comment">// 体积、价值、选法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= V; ++j) &#123;</span><br><span class="line">        dp[i][j] = dp[i - <span class="number">1</span>][j];  <span class="comment">// 选 0 次</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= s[i]; ++k) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j - k * v[i] &lt; <span class="number">0</span>) <span class="keyword">break</span>;  <span class="comment">// 已超出背包体积，不需要再继续 </span></span><br><span class="line">            dp[i][j] = <span class="built_in">max</span>(dp[i][j], dp[i - <span class="number">1</span>][j - k * v[i]] + k * w[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="滚动数组"><a href="#滚动数组" class="headerlink" title="滚动数组"></a>滚动数组</h3><p>如果要优化到滚动数组，则对遍历顺序有要求  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 01 背包滚动数组模板</span></span><br><span class="line"><span class="keyword">int</span> dp[V + <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N; ++i) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = V; j &gt;= v[i]; --j) &#123;  <span class="comment">// 逆序</span></span><br><span class="line">        dp[j] = <span class="built_in">max</span>(dp[j], dp[j - v[i]] + w[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>类似题型：分成两个子集问题、多维01背包问题</p>
-<h2 id="状态机模型"><a href="#状态机模型" class="headerlink" title="状态机模型"></a>状态机模型</h2><p>多状态 dp</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">基本问题：从前走到后，可能会有 k 个状态，求最终的最大收益</span><br><span class="line">定义：dp[i][j]</span><br><span class="line">集合：走到 i 步时处于状态 j</span><br><span class="line">属性：Max</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：状态机</span><br><span class="line">    枚举每个状态的更新</span><br><span class="line">初始状态：</span><br><span class="line">    起始状态无法到达的应标记为 dp[0][j] &#x3D; INF</span><br></pre></td></tr></table></figure>
-<h2 id="状态压缩"><a href="#状态压缩" class="headerlink" title="状态压缩"></a>状态压缩</h2><p>使用<strong>二进制</strong>进行状态压缩<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">基本问题：一共有 n 个元素，每个元素处于选与不选，选择后会产生状态，求最终受益</span><br><span class="line">定义：dp[i]</span><br><span class="line">集合：选择状态为 i 的时候的最终受益</span><br><span class="line">属性：Max&#x2F;Min&#x2F;Count</span><br><span class="line">状态计算：</span><br><span class="line">    上一步的来源：dp[i]</span><br><span class="line">        i : 0 ~ (1 &lt;&lt; n)</span><br><span class="line">    dp[i | (1 &lt;&lt; j)] &#x3D; dp[i] + choose(j) </span><br><span class="line">        choose(j) : 选择了元素 j 后的产生的受益</span><br><span class="line">        i | (1 &lt;&lt; j) : 选择了元素 j 后的状态</span><br></pre></td></tr></table></figure></p>
-<h3 id="状态枚举与子集"><a href="#状态枚举与子集" class="headerlink" title="状态枚举与子集"></a>状态枚举与子集</h3><p>对状态 <code>mask = 0b1101</code>，遍历他的子集<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> subset = mask; subset ; subset = mask &amp; (subset - <span class="number">1</span>))</span><br></pre></td></tr></table></figure></p>
-<p>判断 <code>subset</code> 是否为子集<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> subset, <span class="keyword">int</span> mask)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mask &amp; subset == subset;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>减去子集<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[mask] = <span class="built_in">min</span>(dp[mask], dp[mask ^ subset] + <span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/29/manacher/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/29/manacher/" class="post-title-link" itemprop="url">manacher</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-29 20:44:46" itemprop="dateCreated datePublished" datetime="2020-08-29T20:44:46+08:00">2020-08-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-30 00:33:17" itemprop="dateModified" datetime="2020-08-30T00:33:17+08:00">2020-08-30</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="马拉车算法解决回文子串问题"><a href="#马拉车算法解决回文子串问题" class="headerlink" title="马拉车算法解决回文子串问题"></a>马拉车算法解决回文子串问题</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/29/manacher/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/20/bfs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/20/bfs/" class="post-title-link" itemprop="url">算法相关问题 1</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-20 16:07:11" itemprop="dateCreated datePublished" datetime="2020-08-20T16:07:11+08:00">2020-08-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-06 19:13:21" itemprop="dateModified" datetime="2020-09-06T19:13:21+08:00">2020-09-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>BFS、二分、欧拉回路、LIS<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/20/bfs/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/avl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="dollerL">
-      <meta itemprop="description" content="Keep Alive">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/20/avl/" class="post-title-link" itemprop="url">AVL 树</a>
+            <a href="/2021/02/07/design-mode-flyweight/" class="post-title-link" itemprop="url">design-mode-flyweight</a>
         </h1>
 
         <div class="post-meta">
@@ -862,7 +368,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-20 21:33:26 / 修改时间：21:59:44" itemprop="dateCreated datePublished" datetime="2020-07-20T21:33:26+08:00">2020-07-20</time>
+              <time title="创建时间：2021-02-07 17:47:04 / 修改时间：20:27:35" itemprop="dateCreated datePublished" datetime="2021-02-07T17:47:04+08:00">2021-02-07</time>
             </span>
 
           
@@ -876,15 +382,384 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    TreeNode *left, *right;</span><br><span class="line"></span><br><span class="line">    TreeNode(<span class="keyword">int</span> v) &#123;</span><br><span class="line">        val = v;</span><br><span class="line">        left = right = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/20/avl/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+          <h1 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h1><p>在有大量对象时，有可能会造成内存溢出，我们把其中共同的部分抽象出来，如果有相同的业务请求，直接返回在内存中已有的对象，避免重新创建。</p>
+<h2 id="例子：缓存"><a href="#例子：缓存" class="headerlink" title="例子：缓存"></a>例子：缓存</h2><p>该模式主要是写成缓存</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StudentFactory</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> map = HashMap&lt;String, Student&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getStudent</span><span class="params">(key: <span class="type">String</span>)</span></span> = map.getOrPut(key) &#123; Student() &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-facade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/07/design-mode-facade/" class="post-title-link" itemprop="url">design-mode-facade</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-07 17:29:21 / 修改时间：17:43:55" itemprop="dateCreated datePublished" datetime="2021-02-07T17:29:21+08:00">2021-02-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h1><p>业务层 <code>A</code> 的类想调用业务层 <code>B</code> 的类，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A1 -&gt; B1、B2、B3</span><br><span class="line">A2 -&gt; B2、B4、B8</span><br><span class="line">....</span><br></pre></td></tr></table></figure><br>可设置门面 <strong>Facede</strong> <code>C</code>，门面 <code>C</code> 管理 <code>B</code>的类，<code>A</code> 层通过 <code>C</code> 调用 <code>B</code>，这样 <code>A</code> 层就不需要考虑 <code>B</code> 层的细节或更改，只需调用 <code>C</code> 即可</p>
+<h2 id="例子：去茶馆喝茶"><a href="#例子：去茶馆喝茶" class="headerlink" title="例子：去茶馆喝茶"></a>例子：去茶馆喝茶</h2><p>消费者只需要到茶馆下单即可，不需要关心茶是怎么烧的</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 业务层 B 的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tea</span></span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Water</span></span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TeaLeaf</span></span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Kettle</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">boil</span><span class="params">(water: <span class="type">Water</span>, teaLeaf: <span class="type">TeaLeaf</span>)</span></span> = Tea()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 门面 C 管理 B 的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TeaFacade</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">makeTea</span><span class="params">(kettle: <span class="type">Kettle</span>, water: <span class="type">Water</span>, teaLeaf: <span class="type">TeaLeaf</span>)</span></span> = kettle.boil(water, teaLeaf)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// client 通过 TeaFacade 获得茶 </span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    TODO(<span class="string">"人点单喝茶"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-decorator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/07/design-mode-decorator/" class="post-title-link" itemprop="url">design-mode-decorator</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-07 17:06:19 / 修改时间：17:28:22" itemprop="dateCreated datePublished" datetime="2021-02-07T17:06:19+08:00">2021-02-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="装饰模式"><a href="#装饰模式" class="headerlink" title="装饰模式"></a>装饰模式</h1><p>为一个类（Component）动态添加其他功能，用装饰模式来动态添加</p>
+<h2 id="例子：穿衣服"><a href="#例子：穿衣服" class="headerlink" title="例子：穿衣服"></a>例子：穿衣服</h2><p>人穿衣服，不同人有不同衣服搭配方法，甚至穿着顺序也可以不一样，但结果都是穿上了衣服</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ClothComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">wear</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ClothDecoration</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> clothComponent: ClothComponent</span><br><span class="line">) : ClothComponent &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">wear</span><span class="params">()</span></span> = clothComponent.wear()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JackClothDecoration</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> clothComponent: ClothComponent) : ClothDecoration(clothComponent) &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">wear</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.wear() <span class="comment">// 先运行 component 的方法，再处理装饰效果</span></span><br><span class="line">        print(<span class="string">" jack"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PantClothDecoration</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> clothComponent: ClothComponent) : ClothDecoration(clothComponent) &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">wear</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.wear()</span><br><span class="line">        print(<span class="string">" pant"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Client 要调用的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> name: String) : ClothComponent &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">wear</span><span class="params">()</span></span> = print(<span class="string">"<span class="variable">$name</span> wear"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> person = JackClothDecoration(</span><br><span class="line">        PantClothDecoration(</span><br><span class="line">            Person(<span class="string">"Tom"</span>)</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">    person.wear() <span class="comment">// Tom wear pant jack </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-composite/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/07/design-mode-composite/" class="post-title-link" itemprop="url">design-mode-composite</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-07 15:26:56 / 修改时间：17:02:21" itemprop="dateCreated datePublished" datetime="2021-02-07T15:26:56+08:00">2021-02-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h1><p>组合多个对象形成树形结构以表示具有 “整体—部分” 关系的层次结构。</p>
+<p>组合模式的关键是定义了一个抽象构件类，它既可以代表叶子，又可以代表容器，而客户端针对该抽象构件类进行编程，无须知道它到底表示的是叶子还是容器，可以对其进行统一处理。同时容器对象与抽象构件类之间还建立一个聚合关联关系，在容器对象中既可以包含叶子，也可以包含容器，以此实现递归组合，形成一个树形结构。</p>
+<h2 id="例子：文件目录"><a href="#例子：文件目录" class="headerlink" title="例子：文件目录"></a>例子：文件目录</h2><p>包含文件夹和文件两种类型</p>
+<h3 id="透明组合模式"><a href="#透明组合模式" class="headerlink" title="透明组合模式"></a>透明组合模式</h3><p>抽象构件角色中声明了所有用于管理成员对象的方法</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用了没有重写的方法时会抛出异常</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span>: String = <span class="keyword">throw</span> UnsupportedOperationException()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">add</span><span class="params">(component: <span class="type">Component</span>)</span></span>: <span class="built_in">Unit</span> = <span class="keyword">throw</span> UnsupportedOperationException()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">remove</span><span class="params">(component: <span class="type">Component</span>)</span></span>: <span class="built_in">Unit</span> = <span class="keyword">throw</span> UnsupportedOperationException()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span>: <span class="built_in">Unit</span> = <span class="keyword">throw</span> UnsupportedOperationException()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getContent</span><span class="params">()</span></span>: String = <span class="keyword">throw</span> UnsupportedOperationException()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 文件夹没有内容</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Folder</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> name: String) : Component &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> componentList = ArrayList&lt;Component&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span> = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">add</span><span class="params">(component: <span class="type">Component</span>)</span></span> = componentList.add(component)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">remove</span><span class="params">(component: <span class="type">Component</span>)</span></span> = componentList.remove(component)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(getName())</span><br><span class="line">        componentList.forEach &#123; it.print() &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 文件是叶子节点，不能添加 or 删除文件</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">File</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> name: String,</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> content: String</span><br><span class="line">) : Component &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span> = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(getName())</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getContent</span><span class="params">()</span></span> = content</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="安全组合模式"><a href="#安全组合模式" class="headerlink" title="安全组合模式"></a>安全组合模式</h3><p>在安全组合模式中，只声明了公有方法</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span>: String</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Folder</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> name: String) : Component &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> componentList = ArrayList&lt;Component&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span>: String = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span> &#123;</span><br><span class="line">        println(getName())</span><br><span class="line">        componentList.forEach &#123; it.print() &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">add</span><span class="params">(component: <span class="type">Component</span>)</span></span> = componentList.add(component)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">remove</span><span class="params">(component: <span class="type">Component</span>)</span></span> = componentList.remove(component)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">File</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> name: String,</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> content: String</span><br><span class="line">) : Component &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span>: String = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span> = println(getName())</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getContent</span><span class="params">()</span></span> = content</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-bridge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/07/design-mode-bridge/" class="post-title-link" itemprop="url">design-mode-bridge</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-07 11:26:12 / 修改时间：15:20:32" itemprop="dateCreated datePublished" datetime="2021-02-07T11:26:12+08:00">2021-02-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h1><p>将抽象部分与它的实现部分分离，使它们都可以独立地变化。</p>
+<h2 id="例子：汽车生产"><a href="#例子：汽车生产" class="headerlink" title="例子：汽车生产"></a>例子：汽车生产</h2><p>汽车有多种品牌，每种品牌有对应自己的引擎器件</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象依赖部分</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Engine</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">start</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 高层抽象，Client 直接调用层</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> engine: Engine</span><br><span class="line">) &#123;</span><br><span class="line">    <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">drive</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 高层抽象实现层</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">RefinedCar</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> engine: Engine</span><br><span class="line">) : Car(engine) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">drive</span><span class="params">()</span></span> &#123;</span><br><span class="line">        engine.start()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">getBrand</span><span class="params">()</span></span>: String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体实现</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ACar</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> engine: Engine</span><br><span class="line">) : RefinedCar(engine) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getBrand</span><span class="params">()</span></span>: String = <span class="string">"A"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BEngine</span> : <span class="type">Engine &#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">start</span><span class="params">()</span></span> &#123;</span><br><span class="line">        TODO(<span class="string">"Not yet implemented"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> car = ACar(BEngine())</span><br><span class="line">    car.drive()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们需要增加车的品种 or 增加引擎的种类时，只需要实现对应的继承即可，无需修改其他类</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/07/design-mode-adapter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/07/design-mode-adapter/" class="post-title-link" itemprop="url">design-mode-adapter</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-07 10:23:08 / 修改时间：11:25:52" itemprop="dateCreated datePublished" datetime="2021-02-07T10:23:08+08:00">2021-02-07</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h1><p>把一个类的接口变换成客户端所期待的另一种接口，从而使原本接口不匹配而无法一起工作的两个类能够在一起工作。</p>
+<h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>现有的类可以满足客户类的功能需要，但是它所提供的接口不一定是客户类所期望的，这可能是因为现有类中方法名与目标类中定义的方法名不一致等原因所导致的。<del>客户才是上帝</del></p>
+<h2 id="类的适配器模式"><a href="#类的适配器模式" class="headerlink" title="类的适配器模式"></a>类的适配器模式</h2><p>通过继承类实现接口</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我们需要实现这个接口的函数</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Target</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">request</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要的功能已经在另外的类中实现过了</span></span><br><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">Adaptee</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">originRequest</span><span class="params">()</span></span> &#123;</span><br><span class="line">        TODO()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 Adapter 匹配</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> : <span class="type">Adaptee</span></span>(), Target &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">request</span><span class="params">()</span></span> &#123;</span><br><span class="line">        originRequest()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Client 调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> adapter = Adapter()</span><br><span class="line">    adapter.request()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="对象的适配器模式"><a href="#对象的适配器模式" class="headerlink" title="对象的适配器模式"></a>对象的适配器模式</h2><p>通过注入实现接口</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我们需要实现这个接口的函数</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Target</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">request</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要的功能已经在另外的类中实现过了</span></span><br><span class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">Adaptee</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">originRequest</span><span class="params">()</span></span> &#123;</span><br><span class="line">        TODO()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 Adapter 匹配</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> adaptee: Adaptee = Adaptee()</span><br><span class="line">) : Target &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">request</span><span class="params">()</span></span> &#123;</span><br><span class="line">        adaptee.originRequest()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Client 调用</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> adapter = Adapter()</span><br><span class="line">    adapter.request()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/06/design-mode-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="dollerL">
+      <meta itemprop="description" content="Keep Alive">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/06/design-mode-proxy/" class="post-title-link" itemprop="url">design-mode-proxy</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-06 23:26:10 / 修改时间：23:31:06" itemprop="dateCreated datePublished" datetime="2021-02-06T23:26:10+08:00">2021-02-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><p>为其他对象提供一种代理以控制对这个对象的访问</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ol>
+<li>使用远程服务器中的类</li>
+<li>写时复制（CopyOnWrite）</li>
+<li>缓存</li>
+</ol>
+<h2 id="例子：显示图片"><a href="#例子：显示图片" class="headerlink" title="例子：显示图片"></a>例子：显示图片</h2><p>图片类有加载、显示过程，使用代理来减少加载次数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">DisplayImage</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RealDisplayImage</span> : <span class="type">DisplayImage &#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">()</span></span> &#123;</span><br><span class="line">        TODO(<span class="string">"Not yet implemented"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProxyDisplayImage</span> : <span class="type">DisplayImage &#123;</span></span></span><br><span class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> proxy: RealDisplayImage</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">display</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>::proxy.isInitialized) &#123;</span><br><span class="line">            proxy = RealDisplayImage()</span><br><span class="line">        &#125;</span><br><span class="line">        proxy.display()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -903,7 +778,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -969,7 +844,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1012,7 +887,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1050,7 +925,7 @@
 <script src="/js/schemes/pisces.js"></script>
 
 
-<script src="/js/next-boot.js"></script>
+<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -1074,53 +949,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-
-    
 
   
 
