@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开炮！</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8; /* 柔和的浅蓝色背景 */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #2575fc; /* 蓝色标题 */
+            font-size: 24px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #1a5bbf; /* 按钮悬停颜色 */
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa; /* 浅灰色背景 */
+            border-radius: 8px;
+            color: #333;
+            text-align: left;
+        }
+        .result h3 {
+            margin-top: 0;
+            color: #2575fc; /* 蓝色标题 */
+        }
+        .result p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>联立炮方程式</h1>
+    <label for="a">输入场上+手卡数:</label>
+    <input type="number" id="a" min="0" max="26" required>
+    
+    <label for="b">输入目标星级or阶级:</label>
+    <input type="number" id="b" min="0" max="13" required>
+    
+    <button onclick="solve()">计算</button>
+    
+    <div class="result" id="result">
+        <!-- 结果将显示在这里 -->
+    </div>
+</div>
+
+<script>
+    function solve() {
+        const a = parseInt(document.getElementById('a').value);
+        const b = parseInt(document.getElementById('b').value);
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '';
+
+        let solutions = [];
+
+        for (let x = 1; x < 13; x++) {
+            for (let y = 1; y < 13; y++) {
+                if (2 * x + y === a && x + y === b) {
+                    solutions.push({ x, y });
+                }
+            }
+        }
+
+        if (solutions.length > 0) {
+            let resultHTML = '<h3>解:</h3>';
+            solutions.forEach(solution => {
+                resultHTML += `<p>超量阶级: ${solution.x}, 融合等级: ${solution.y}</p>`;
+            });
+            resultDiv.innerHTML = resultHTML;
+        } else {
+            resultDiv.innerHTML = '<p>无解</p>';
+        }
+    }
+</script>
+
+</body>
+</html>
