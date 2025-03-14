@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天做了吗</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #64B5F6;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        /* 事件容器 */
+        #events-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* 事件卡片样式 */
+        .event-card {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card .event-text {
+            font-size: 16px;
+            color: #555;
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .event-card .event-count {
+            font-size: 16px;
+            color: #777;
+            margin-right: 10px;
+        }
+
+        .event-card button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #64B5F6;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .event-card button:hover {
+            background-color: #42A5F5;
+        }
+
+        .event-card button.delete {
+            background-color: #ef5350;
+            margin-left: 10px;
+        }
+
+        .event-card button.delete:hover {
+            background-color: #e53935;
+        }
+
+        /* 添加事件按钮 */
+        #add-event {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #64B5F6;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #add-event:hover {
+            background-color: #42A5F5;
+        }
+
+        /* 添加事件弹窗 */
+        #add-event-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 90%;
+            max-width: 300px; /* 缩小弹窗宽度 */
+        }
+
+        #add-event-modal input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            box-sizing: border-box; /* 确保输入框宽度包含padding */
+        }
+
+        #add-event-modal input:focus {
+            border-color: #64B5F6;
+            outline: none;
+        }
+
+        #add-event-modal button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #64B5F6;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        #add-event-modal button:hover {
+            background-color: #42A5F5;
+        }
+
+        #add-event-modal button.cancel {
+            background-color: #ef5350;
+            margin-left: 10px;
+        }
+
+        #add-event-modal button.cancel:hover {
+            background-color: #e53935;
+        }
+
+        /* 遮罩层 */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <h1>每日任务</h1>
+    <div id="events-container">
+        <!-- 事件将动态添加到这里 -->
+    </div>
+    <button id="add-event">添加事件</button>
+
+    <!-- 添加事件弹窗 -->
+    <div id="add-event-modal">
+        <input type="text" id="event-input" placeholder="请输入事件内容">
+        <button id="save-event">保存</button>
+        <button class="cancel" id="cancel-event">取消</button>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div id="overlay"></div>
+
+    <script>
+        // 从localStorage加载事件数据
+        let events = JSON.parse(localStorage.getItem('events')) || [];
+
+        // 保存事件数据到localStorage
+        function saveEvents() {
+            localStorage.setItem('events', JSON.stringify(events));
+        }
+
+        // 渲染事件列表
+        function renderEvents() {
+            const container = document.getElementById('events-container');
+            container.innerHTML = '';
+            events.forEach((event, index) => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.innerHTML = `
+                    <div class="event-text">${event.name}</div>
+                    <div class="event-count">已完成次数: ${event.count}</div>
+                    <button onclick="incrementEvent(${index})">+1</button>
+                    <button class="delete" onclick="deleteEvent(${index})">删除</button>
+                `;
+                container.appendChild(eventCard);
+            });
+        }
+
+        // 显示添加事件弹窗
+        document.getElementById('add-event').addEventListener('click', () => {
+            document.getElementById('add-event-modal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+
+        // 隐藏添加事件弹窗
+        document.getElementById('cancel-event').addEventListener('click', () => {
+            document.getElementById('add-event-modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+        // 保存新事件
+        document.getElementById('save-event').addEventListener('click', () => {
+            const eventName = document.getElementById('event-input').value.trim();
+            if (eventName) {
+                events.push({ name: eventName, count: 0 });
+                saveEvents();
+                renderEvents();
+                document.getElementById('event-input').value = '';
+                document.getElementById('add-event-modal').style.display = 'none';
+                document.getElementById('overlay').style.display = 'none';
+            }
+        });
+
+        // 增加事件完成次数
+        window.incrementEvent = function(index) {
+            events[index].count++;
+            saveEvents();
+            renderEvents();
+        };
+
+        // 删除事件
+        window.deleteEvent = function(index) {
+            events.splice(index, 1);
+            saveEvents();
+            renderEvents();
+        };
+
+        // 每天凌晨0:00清空事件完成次数
+        function clearEventCountsAtMidnight() {
+            const now = new Date();
+            const midnight = new Date(now);
+            midnight.setHours(24, 0, 0, 0);
+            const timeUntilMidnight = midnight - now;
+
+            setTimeout(() => {
+                events.forEach(event => event.count = 0); // 清空所有事件的完成次数
+                saveEvents();
+                renderEvents();
+                clearEventCountsAtMidnight(); // 递归调用以设置下一个午夜
+            }, timeUntilMidnight);
+        }
+
+        // 初始化
+        renderEvents();
+        clearEventCountsAtMidnight();
+    </script>
+</body>
+</html>
