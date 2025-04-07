@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixiv作品跳转</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #444;
+            font-weight: 300;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #66afe9;
+            outline: none;
+            box-shadow: 0 0 5px rgba(102, 175, 233, 0.3);
+        }
+        
+        button {
+            background-color: #0096fa;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #007ad9;
+        }
+        
+        .description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pixiv作品跳转</h1>
+        <div class="input-group">
+            <input type="text" id="artworkInput" placeholder="输入包含作品ID的文本...">
+        </div>
+        <button onclick="redirectToPixiv()">跳转到作品</button>
+        <p class="description">输入任意包含Pixiv作品ID的文本，系统会自动提取数字ID并跳转</p>
+    </div>
+
+    <script>
+        function redirectToPixiv() {
+            const input = document.getElementById('artworkInput').value;
+            // 提取所有数字并组合
+            const numbers = input.match(/\d+/g);
+            if (numbers && numbers.length > 0) {
+                const artworkId = numbers.join('');
+                window.location.href = `https://www.pixiv.net/artworks/${artworkId}`;
+            } else {
+                alert('未找到数字ID，请重新输入');
+            }
+        }
+        
+        // 支持按Enter键提交
+        document.getElementById('artworkInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                redirectToPixiv();
+            }
+        });
+    </script>
+</body>
+</html>
